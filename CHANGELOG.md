@@ -5,9 +5,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1] 
+## [1.0.2] - 2025-08-26
 
-### 🔧 Code Quality Improvements
+#### 🚀 Release Improvements
+- 完善发布流程，确保代码质量和测试覆盖率
+- 通过全面的静态代码分析和单元测试验证
+- 优化包发布规范，提升用户体验
+- 更新文档和API说明，确保版本一致性
+
+---
+
+## [1.0.1] - 2025-01-26
+
+#### 🔧 Code Quality Improvements
 - 修复测试文件中的代码风格问题
 - 优化构造函数使用const关键字提升性能
 - 通过静态代码分析检查，确保代码质量
@@ -15,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0]
+## [1.0.0] - Previous Version
 
 ### 🎉 Major Release - Pure Dart Package
 
