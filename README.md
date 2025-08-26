@@ -123,27 +123,27 @@ void main() {
 
 ```dart
 // 发送简单事件
-sendGlobalEvent<String>(
-  type: 'user_message',
-  data: 'Hello, World!',
+globalEventBus.sendEvent<String>(
+  type: 'user_message',
+  data: 'Hello, World!',
 );
 
 // 发送带优先级的事件
-sendGlobalEvent<Map<String, dynamic>>(
-  type: 'user_login',
-  data: {
-    'userId': '12345',
-    'username': 'john_doe',
-    'loginTime': DateTime.now().toIso8601String(),
-  },
-  priority: EventPriority.high,
+globalEventBus.sendEvent<Map<String, dynamic>>(
+  type: 'user_login',
+  data: {
+    'userId': '12345',
+    'username': 'john_doe',
+    'loginTime': DateTime.now().toIso8601String(),
+  },
+  priority: EventPriority.high,
 );
 
 // 延迟发送事件
-sendGlobalEventDelayed<String>(
-  type: 'delayed_notification',
-  data: '这是一个延迟消息',
-  delayMs: 3000, // 3秒后发送
+globalEventBus.sendEventDelayed<String>(
+  type: 'delayed_notification',
+  data: '这是一个延迟消息',
+  delay: Duration(milliseconds: 3000), // 3秒后发送
 );
 ```
 
@@ -163,7 +163,7 @@ class _MyWidgetState extends State<MyWidget> {
     super.initState();
     
     // 监听特定类型的事件
-    _subscription = listenGlobalEvent<String>(
+    _subscription = globalEventBus.listen<String>(
       listenerId: 'my_widget_listener',
       onEvent: (event) {
         print('收到事件: ${event.type}, 数据: ${event.data}');
@@ -183,6 +183,85 @@ class _MyWidgetState extends State<MyWidget> {
 }
 ```
 
+### API 参数说明
+
+#### 事件发送方法
+
+**sendEvent<T>** - 发送带数据的事件
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| type | String | ✅ | - | 事件类型标识符 |
+| data | T | ✅ | - | 事件携带的数据 |
+| priority | EventPriority | ❌ | EventPriority.normal | 事件优先级 |
+| metadata | Map<String, dynamic>? | ❌ | null | 事件元数据 |
+
+**sendEventWithoutData** - 发送无数据事件
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| type | String | ✅ | - | 事件类型标识符 |
+| priority | EventPriority | ❌ | EventPriority.normal | 事件优先级 |
+| metadata | Map<String, dynamic>? | ❌ | null | 事件元数据 |
+
+**sendEventDelayed<T>** - 延迟发送事件
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| type | String | ✅ | - | 事件类型标识符 |
+| data | T | ✅ | - | 事件携带的数据 |
+| delay | Duration | ✅ | - | 延迟时间 |
+| priority | EventPriority | ❌ | EventPriority.normal | 事件优先级 |
+| metadata | Map<String, dynamic>? | ❌ | null | 事件元数据 |
+
+#### 事件监听方法
+
+**listen<T>** - 监听事件
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| listenerId | String | ✅ | - | 监听器唯一标识符 |
+| onEvent | Function(GlobalEvent<T>) | ✅ | - | 事件处理回调函数 |
+| eventTypes | List<String>? | ❌ | null | 指定监听的事件类型列表 |
+
+**listenOnce<T>** - 一次性监听事件
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| listenerId | String | ✅ | - | 监听器唯一标识符 |
+| onEvent | Function(GlobalEvent<T>) | ✅ | - | 事件处理回调函数 |
+| eventTypes | List<String>? | ❌ | null | 指定监听的事件类型列表 |
+
+**removeListener** - 移除监听器
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| listenerId | String | ✅ | - | 要移除的监听器标识符 |
+
+#### 日志配置方法
+
+**configureLogging** - 配置日志
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| config | GlobalEventLogConfig | ✅ | - | 日志配置对象 |
+
+**GlobalEventLogConfig** 配置参数
+
+| 参数名 | 类型 | 必需 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| level | EventLogLevel | ❌ | EventLogLevel.info | 日志级别 |
+| enabled | bool | ❌ | true | 是否启用日志 |
+| showTimestamp | bool | ❌ | true | 是否显示时间戳 |
+| showEventId | bool | ❌ | false | 是否显示事件ID |
+| showPriority | bool | ❌ | true | 是否显示优先级 |
+| showEventData | bool | ❌ | true | 是否显示事件数据 |
+| showListenerInfo | bool | ❌ | false | 是否显示监听器信息 |
+| logPrefix | String? | ❌ | null | 自定义日志前缀 |
+| eventTypeFilter | List<String>? | ❌ | null | 事件类型过滤器 |
+| listenerFilter | List<String>? | ❌ | null | 监听器过滤器 |
+| customLogger | Function(String)? | ❌ | null | 自定义日志处理函数 |
+
 ## 📚 详细使用指南
 
 事件优先级
@@ -197,7 +276,7 @@ enum EventPriority {
 }
 
 // 使用示例
-sendGlobalEvent(
+globalEventBus.sendEvent(
   type: 'emergency_logout',
   data: 'Session expired',
   priority: EventPriority.critical,
@@ -213,7 +292,7 @@ globalEventBus.manager.setBatchMode(true, intervalMs: 50);
 
 // 发送大量事件
 for (int i = 0; i < 1000; i++) {
-  sendGlobalEvent<int>(
+  globalEventBus.sendEvent<int>(
     type: 'batch_event',
     data: i,
   );
@@ -241,7 +320,7 @@ globalEventBus.manager.addOnceListener<String>(
 
 ```dart
 // 同时监听多种事件类型
-listenGlobalEvent(
+globalEventBus.listen(
   listenerId: 'notification_handler',
   eventTypes: ['user_login', 'user_logout', 'message_received'],
   onEvent: (event) {
@@ -264,7 +343,7 @@ listenGlobalEvent(
 
 ```dart
 // 带条件的事件监听
-listenGlobalEvent<Map<String, dynamic>>(
+globalEventBus.listen<Map<String, dynamic>>(
   listenerId: 'admin_listener',
   onEvent: (event) {
     // 只处理管理员相关的事件
@@ -337,7 +416,7 @@ final events = [
   GlobalEvent<bool>(type: 'event3', data: true),
 ];
 
-sendGlobalEventBatch(events);
+globalEventBus.sendEventBatch(events);
 ```
 
 🎯 实际应用场景
@@ -346,14 +425,14 @@ sendGlobalEventBatch(events);
 
 ```dart
 // 用户登录
-sendGlobalEvent<UserInfo>(
+globalEventBus.sendEvent<UserInfo>(
   type: 'user_login',
   data: UserInfo(id: '123', name: 'John', email: 'john@example.com'),
   priority: EventPriority.high,
 );
 
 // 监听用户状态变化, 并在登录后立即更新用户界面
-listenGlobalEvent<UserInfo>(
+globalEventBus.listen<UserInfo>(
   listenerId: 'user_profile_page',
   onEvent: (event) {
     // 更新用户界面
@@ -368,7 +447,7 @@ listenGlobalEvent<UserInfo>(
 
 ```dart
 // 添加商品到购物车
-sendGlobalEvent<CartItem>(
+globalEventBus.sendEvent<CartItem>(
   type: 'cart_add_item',
   data: CartItem(
     productId: 'p001',
@@ -379,7 +458,7 @@ sendGlobalEvent<CartItem>(
 );
 
 // 监听购物车变化
-listenGlobalEvent<CartItem>(
+globalEventBus.listen<CartItem>(
   listenerId: 'cart_badge',
   eventTypes: ['cart_add_item', 'cart_remove_item', 'cart_update_quantity'],
   onEvent: (event) {
@@ -393,14 +472,14 @@ listenGlobalEvent<CartItem>(
 
 ```dart
 // 网络状态变化
-sendGlobalEvent<bool>(
+globalEventBus.sendEvent<bool>(
   type: 'network_status_changed',
   data: isConnected,
   priority: EventPriority.critical,
 );
 
 // 全局网络状态监听
-listenGlobalEvent<bool>(
+globalEventBus.listen<bool>(
   listenerId: 'global_network_monitor',
   onEvent: (event) {
     if (event.data) {
@@ -417,13 +496,13 @@ listenGlobalEvent<bool>(
 
 ```dart
 // 切换主题
-sendGlobalEvent<ThemeMode>(
+globalEventBus.sendEvent<ThemeMode>(
   type: 'theme_changed',
   data: ThemeMode.dark,
 );
 
 // 监听主题变化
-listenGlobalEvent<ThemeMode>(
+globalEventBus.listen<ThemeMode>(
   listenerId: 'main_app',
   onEvent: (event) {
     // 更新应用主题
@@ -475,7 +554,7 @@ void main() {
       String? receivedData;
 
       // 设置监听器
-      final subscription = listenGlobalEvent<String>(
+      final subscription = globalEventBus.listen<String>(
         listenerId: 'test_listener',
         onEvent: (event) {
           receivedData = event.data;
@@ -483,7 +562,7 @@ void main() {
       );
 
       // 发送事件
-      sendGlobalEvent<String>(
+      globalEventBus.sendEvent<String>(
         type: 'test_event',
         data: 'test_data',
       );
