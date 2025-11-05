@@ -1,13 +1,13 @@
 name: global_event_bus
-description: A high-performance, type-safe global event bus system for Flutter applications with priority support, batch processing, and comprehensive logging.
+description: 用于Flutter应用程序的高性能、类型安全的全局事件总线系统，具有优先级支持、批处理和全面的日志记录功能。
 version: 1.0.2
-homepage: https://gitee.com/peiduo_734386/global_event_bus
-repository: https://gitee.com/peiduo_734386/global_event_bus
-issue_tracker: https://gitee.com/peiduo_734386/global_event_bus/issues
+homepage: https://gitee.com/pedro-labs/
+repository: https://gitee.com/pedro-labs/global_event_bus
+issue_tracker: https://gitee.com/pedro-labs/global_event_bus/issues
 
 environment:
-  sdk: '>=2.19.0 <4.0.0'
-  flutter: '>=3.3.0'
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=3.3.0"
 
 dependencies:
   flutter:
@@ -17,4 +17,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
