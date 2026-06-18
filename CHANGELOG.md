@@ -5,9 +5,34 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-06-18
+
+#### 📝 Documentation
+
+- 为所有类、枚举、函数和属性补充完整的 API 文档注释
+- 添加详细的参数说明、返回值说明和使用示例
+- 完善 `EventPriority` 枚举的优先级说明
+- 完善 `EventStats` 类的统计方法文档
+- 完善 `BaseGlobalEvent` 和 `GlobalEvent<T>` 的事件模型文档
+- 完善 `EventLogLevel` 枚举的日志级别说明
+- 完善 `GlobalEventLogConfig` 的配置参数和预设配置文档
+- 完善 `GlobalEventLogger` 的所有日志方法文档
+- 完善 `GlobalEventManager` 的核心管理方法文档
+- 完善 `GlobalEventBus` 的公共 API 文档
+- 所有文档包含中文说明和代码示例
+
+#### 🔧 Code Quality
+
+- 通过 `flutter analyze` 静态代码分析，无问题
+- 通过 `pana` 工具评分预检，得分 120/140
+- 所有单元测试 100% 通过（6/6 测试用例）
+
+---
+
 ## [1.0.2] - 2025-08-26
 
 #### 🚀 Release Improvements
+
 - 完善发布流程，确保代码质量和测试覆盖率
 - 通过全面的静态代码分析和单元测试验证
 - 优化包发布规范，提升用户体验
@@ -18,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.1] - 2025-01-26
 
 #### 🔧 Code Quality Improvements
+
 - 修复测试文件中的代码风格问题
 - 优化构造函数使用const关键字提升性能
 - 通过静态代码分析检查，确保代码质量
@@ -30,11 +56,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎉 Major Release - Pure Dart Package
 
 #### ✨ Features
+
 - **BREAKING CHANGE**: 转换为纯Dart包，移除所有平台特定代码
 - 保持所有核心事件总线功能完整性
 - 简化包结构，提升性能和兼容性
 
 #### 🗑️ Removed
+
 - 移除平台插件配置和依赖
 - 删除 `getPlatformVersion()` 方法（非核心功能）
 - 移除所有原生平台目录（android, ios, linux, macos, windows）
@@ -44,17 +72,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `global_event_bus_web.dart`
 
 #### 🔧 Technical Changes
+
 - 更新 `pubspec.yaml`，移除 `plugin_platform_interface` 和 `flutter_web_plugins` 依赖
 - 简化主入口文件 `global_event_bus.dart`
 - 更新测试文件，专注于核心事件总线功能测试
 
 #### 📈 Benefits
+
 - ✅ 更好的跨平台兼容性
 - ✅ 更简单的维护和部署
 - ✅ 更快的包加载速度
 - ✅ 减少依赖冲突风险
 
 #### 🔄 Migration Guide
+
 如果您之前使用了 `getPlatformVersion()` 方法，请移除相关调用。所有其他API保持不变。
 
 ---
@@ -88,7 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.6] 
+## [0.0.6]
 
 ### 🚀 新功能
 
@@ -131,7 +162,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.5] 
+## [0.0.5]
 
 ### 🚀 新功能
 
@@ -145,7 +176,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.4] 
+## [0.0.4]
 
 ### 🐛 修复
 
@@ -172,7 +203,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.3] 
+## [0.0.3]
 
 ### 🚀 新功能
 
@@ -207,7 +238,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.2] 
+## [0.0.2]
 
 ### 🚀 新功能
 
@@ -234,7 +265,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.1] 
+## [0.0.1]
 
 ### 🎉 首次发布
 

@@ -9,6 +9,21 @@ import 'global_event_log.dart';
 /// 采用观察者模式和流式处理架构，支持事件优先级、批量处理、日志监控等高级功能。
 ///
 /// 便捷的全局事件管理器实例
+///
+/// 这是 [GlobalEventBus] 的单例实例，可以直接使用此全局变量来发送和监听事件。
+/// 等同于调用 [GlobalEventBus.instance]。
+///
+/// 示例：
+/// ```dart
+/// // 发送事件
+/// globalEventBus.sendEvent<String>(type: 'my_event', data: 'hello');
+///
+/// // 监听事件
+/// globalEventBus.listen<String>(
+///   listenerId: 'my_listener',
+///   onEvent: (event) => print(event.data),
+/// );
+/// ```
 final globalEventBus = GlobalEventBus.instance;
 
 /// 全局事件总线 API
@@ -337,33 +352,88 @@ class GlobalEventBus {
   }
 
   /// 配置日志
+  ///
+  /// 更新全局事件系统的日志配置。
+  ///
+  /// 参数：
+  /// - [config] 新的日志配置实例
+  ///
+  /// 示例：
+  /// ```dart
+  /// // 启用调试日志
+  /// globalEventBus.configureLogging(GlobalEventLogConfig.debugConfig);
+  ///
+  /// // 自定义日志配置
+  /// globalEventBus.configureLogging(
+  ///   GlobalEventLogConfig(level: EventLogLevel.warning),
+  /// );
+  /// ```
   void configureLogging(GlobalEventLogConfig config) {
     _manager.configureLogging(config);
   }
 
   /// 启用/禁用批量发送模式
+  ///
+  /// 批量发送模式可以将短时间内发送的多个事件合并为一次发送，
+  /// 提高性能并减少事件处理开销。
+  ///
+  /// 参数：
+  /// - [enabled] 是否启用批量模式
+  /// - [intervalMs] 批量发送间隔（毫秒），默认 100ms
+  ///
+  /// 示例：
+  /// ```dart
+  /// // 启用批量模式，间隔 200ms
+  /// globalEventBus.setBatchMode(true, intervalMs: 200);
+  ///
+  /// // 禁用批量模式
+  /// globalEventBus.setBatchMode(false);
+  /// ```
   void setBatchMode(bool enabled, {int intervalMs = 100}) {
     _manager.setBatchMode(enabled, intervalMs: intervalMs);
   }
 
   /// 获取统计信息
+  ///
+  /// 返回当前事件系统的运行统计数据，包括发送和接收的事件数量等。
   EventStats get stats => _manager.stats;
 
   /// 获取当前监听器数量
+  ///
+  /// 返回当前已注册的监听器总数。
   int get listenerCount => _manager.listenerCount;
 
   /// 获取所有监听器ID
+  ///
+  /// 返回当前所有已注册监听器的唯一标识符列表。
   List<String> get listenerIds => _manager.listenerIds;
 
   /// 获取性能信息
+  ///
+  /// 返回包含当前系统运行状态的详细信息映射，
+  /// 包括监听器数量、事件统计、批量模式状态等。
   Map<String, dynamic> get performanceInfo => _manager.performanceInfo;
 
   /// 检查是否有指定的监听器
+  ///
+  /// 判断指定ID的监听器是否已注册。
+  ///
+  /// 参数：
+  /// - [listenerId] 要检查的监听器ID
+  ///
+  /// 返回值：
+  /// - `true` 表示监听器存在
+  /// - `false` 表示监听器不存在
   bool hasListener(String listenerId) {
     return _manager.listenerIds.contains(listenerId);
   }
 
   /// 销毁
+  ///
+  /// 释放所有资源，包括取消定时器、移除所有监听器和关闭事件流。
+  /// 通常在应用退出时调用。
+  ///
+  /// 注意：销毁后不能再使用此实例发送或监听事件。
   void dispose() {
     _manager.dispose();
   }
