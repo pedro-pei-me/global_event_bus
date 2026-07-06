@@ -5,6 +5,52 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-06
+
+#### 🚀 新功能
+
+**可视化调试面板**
+
+- 新增 `GebDebugPanel` 调试面板，提供可视化开发调试工具
+- 包含 6 个功能模块：
+  - **统计概览**：事件总数、监听器数量、事件类型分布、运行状态
+  - **实时事件流**：实时显示事件列表、优先级标识、暂停/继续、清空
+  - **历史记录**：事件历史列表、按类型筛选、事件详情查看
+  - **监听器管理**：监听器列表、监听类型、移除单个/全部监听器
+  - **日志查看**：实时日志、级别过滤、暂停/继续、导出到控制台
+  - **调试工具**：发送测试事件、系统操作、批量模式切换、数据导出
+- 支持多种打开方式：
+  - `globalEventBus.debug.show(context)` - 标准方式
+  - `globalEventBus.debug.showModal(context)` - 模态弹窗
+  - `globalEventBus.debug.showFloating(context)` - 悬浮按钮
+  - `globalEventBus.debug.pushNamed(context)` - 路由名称
+- 提供 `GebDebugController` 调试面板控制器，方便集成和配置
+- 支持开发环境自动显示悬浮调试按钮
+
+#### 📝 文档
+
+- 新增 `doc/` 目录结构，按 Dart 官方规范组织文档
+- 创建详细的功能模块文档：
+  - `doc/getting_started.md` - 快速开始指南
+  - `doc/api_reference.md` - 完整 API 参考
+  - `doc/widgets/geb_builder.md` - GebBuilder Widget 使用指南
+  - `doc/widgets/debug_panel.md` - 调试面板使用指南
+  - `doc/mixins/geb_listener.md` - GebListener Mixin 使用指南
+  - `doc/mixins/geb_bloc_mixin.md` - GebBlocMixin 使用指南
+  - `doc/integration/bloc_integration.md` - BLoC 集成完整指南
+  - `doc/advanced/priority.md` - 事件优先级系统
+  - `doc/advanced/batch_mode.md` - 批量处理模式
+- 更新 README.md，添加文档目录链接
+- 完善示例项目，添加调试面板演示入口
+
+#### 🔧 改进
+
+- 修复调试面板日志页面 Row 溢出问题，使用 Wrap 替代 Row
+- 修复 dispose 后调用 setState 的问题，添加 mounted 检查
+- 优化调试面板各模块的布局和交互
+
+---
+
 ## [1.2.0] - 2026-07-06
 
 #### 🚀 新功能
@@ -58,12 +104,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - State 更新前检查 `mounted` 属性，防止 Flutter 框架断言错误
 - 优化批量模式下的事件排序和发送逻辑
 - 增强错误处理和异常捕获机制
-
-#### 📝 文档
-
-- 更新 README.md，添加所有新功能的详细文档和使用示例
-- 完善示例项目，添加 GebBuilder 和 BLoC 集成演示页面
-- 更新 API 参数说明，使用新的 Geb 前缀类名
 
 #### ⚠️ 向后兼容性
 

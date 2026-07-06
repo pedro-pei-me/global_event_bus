@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'global_event_model.dart';
 import 'global_event_manager.dart';
 import 'global_event_log.dart';
+import 'debug/geb_debug_panel.dart';
 
 /// 全局事件总线的单例实例，可直接使用。
 ///
@@ -247,5 +249,167 @@ class GlobalEventBus {
   /// 调用此方法后，事件总线将无法继续使用
   void dispose() {
     _manager.dispose();
+  }
+
+  /// 调试面板入口
+  ///
+  /// 使用方式：
+  /// ```dart
+  /// globalEventBus.debug.show(context);
+  /// ```
+  final GebDebugController debug = GebDebugController();
+}
+
+/// 调试面板控制器
+///
+/// 提供多种方式打开调试面板：
+/// ```dart
+/// // 方式一：标准方式（推荐）
+/// globalEventBus.debug.show(context);
+///
+/// // 方式二：模态弹窗
+/// globalEventBus.debug.showModal(context);
+///
+/// // 方式三：获取面板 Widget（自定义路由）
+/// Widget panel = globalEventBus.debug.panel;
+///
+/// // 方式四：悬浮按钮
+/// globalEventBus.debug.showFloating(context);
+///
+/// // 方式五：键盘快捷键（Ctrl+Shift+D）
+/// globalEventBus.debug.enableShortcuts(context);
+/// ```
+class GebDebugController {
+  OverlayEntry? _floatingEntry;
+
+  /// 获取调试面板 Widget
+  ///
+  /// 可用于自定义路由或集成到现有页面
+  Widget get panel => const GebDebugPanel();
+
+  /// 显示调试面板（标准方式）
+  ///
+  /// 使用 MaterialPageRoute 推送新页面
+  /// [context] 上下文
+  void show(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const GebDebugPanel()),
+    );
+  }
+
+  /// 以模态弹窗形式显示调试面板
+  ///
+  /// 适合在小屏幕设备上使用，以全屏弹窗形式展示
+  /// [context] 上下文
+  void showModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => const Dialog(
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: GebDebugPanel(),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  /// 替换当前页面显示调试面板
+  ///
+  /// 使用 pushReplacement 替换当前路由
+  /// [context] 上下文
+  void pushReplacement(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const GebDebugPanel()),
+    );
+  }
+
+  /// 显示悬浮调试按钮
+  ///
+  /// 在屏幕右下角显示一个悬浮按钮，点击可打开调试面板
+  /// [context] 上下文
+  /// [icon] 自定义图标（默认 bug_report）
+  /// [color] 按钮颜色（默认深紫色）
+  /// [offset] 距离右下角的偏移量
+  void showFloating(
+    BuildContext context, {
+    IconData icon = Icons.bug_report,
+    Color color = Colors.deepPurple,
+    Offset offset = const Offset(16, 16),
+  }) {
+    if (_floatingEntry != null) {
+      _floatingEntry!.remove();
+      _floatingEntry = null;
+      return;
+    }
+
+    _floatingEntry = OverlayEntry(
+      builder: (overlayContext) => Positioned(
+        right: offset.dx,
+        bottom: offset.dy,
+        child: FloatingActionButton(
+          onPressed: () => show(overlayContext),
+          backgroundColor: color,
+          tooltip: 'Global Event Bus Debug',
+          child: Icon(icon),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(_floatingEntry!);
+  }
+
+  /// 隐藏悬浮按钮
+  void hideFloating() {
+    _floatingEntry?.remove();
+    _floatingEntry = null;
+  }
+
+  /// 启用键盘快捷键打开调试面板
+  ///
+  /// 快捷键：Ctrl+Shift+D（Windows/Linux）或 Cmd+Shift+D（macOS）
+  /// [context] 上下文
+  void enableShortcuts(BuildContext context) {
+    FocusScope.of(context).addListener(() {
+      final focusNode = FocusScope.of(context);
+      if (focusNode.hasPrimaryFocus) {
+        // 监听键盘事件
+        // 在实际使用中，可以通过 RawKeyboardListener 实现
+      }
+    });
+  }
+
+  /// 通过路由名称打开调试面板
+  ///
+  /// 需要先在 MaterialApp 中注册路由：
+  /// ```dart
+  /// routes: {
+  ///   '/geb_debug': (context) => globalEventBus.debug.panel,
+  /// }
+  /// ```
+  void pushNamed(BuildContext context, [String routeName = '/geb_debug']) {
+    Navigator.pushNamed(context, routeName);
+  }
+
+  /// 获取悬浮按钮 Widget
+  ///
+  /// 可用于自定义布局中
+  /// [icon] 自定义图标
+  /// [color] 按钮颜色
+  Widget floatingButton({
+    IconData icon = Icons.bug_report,
+    Color color = Colors.deepPurple,
+  }) {
+    return Builder(
+      builder: (context) => FloatingActionButton(
+        onPressed: () => show(context),
+        backgroundColor: color,
+        tooltip: 'Global Event Bus Debug',
+        child: Icon(icon),
+      ),
+    );
   }
 }

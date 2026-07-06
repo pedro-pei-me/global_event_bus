@@ -8,8 +8,8 @@ import 'global_event_model.dart';
 /// 事件总线监听器 Mixin，用于在 StatefulWidget 中监听事件。
 ///
 /// 自动管理订阅生命周期，在 Widget 销毁时自动取消所有订阅。
-/// 使用泛型 [T] 来指定事件数据类型，提供类型安全。
-mixin GebListener on State {
+/// 使用泛型 `T` 来指定事件数据类型，提供类型安全。
+mixin GebListener<W extends StatefulWidget> on State<W> {
   /// 订阅列表，用于管理所有事件订阅
   final List<StreamSubscription<GebBaseEvent>> _eventBusSubscriptions = [];
 
@@ -159,7 +159,7 @@ mixin EventBusListener on State {
 
 /// 无数据事件监听器 Mixin，用于监听不带数据的事件。
 ///
-/// 与 [GebListener] 类似，但专门用于监听 [sendEventWithoutData] 发送的事件。
+/// 与 [GebListener] 类似，但专门用于监听 `sendEventWithoutData` 发送的事件。
 mixin GebNoDataListener on State {
   /// 订阅列表，用于管理所有无数据事件订阅
   final List<StreamSubscription<GebBaseEvent>> _noDataSubscriptions = [];

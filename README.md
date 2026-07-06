@@ -362,6 +362,18 @@ class _MyWidgetState extends State<MyWidget> with GebListener {
 | GebLogConfig.productionConfig | 生产配置：error级别，不显示敏感信息 |
 | GebLogConfig.silentConfig     | 静默配置：禁用所有日志              |
 
+## 📖 文档目录
+
+- [快速开始](doc/getting_started.md) - 安装和基本使用
+- [API 参考](doc/api_reference.md) - 完整 API 文档
+- [GebBuilder Widget](doc/widgets/geb_builder.md) - 响应式 Widget
+- [调试面板](doc/widgets/debug_panel.md) - 开发调试工具
+- [GebListener Mixin](doc/mixins/geb_listener.md) - 简化事件订阅
+- [GebBlocMixin](doc/mixins/geb_bloc_mixin.md) - BLoC 集成
+- [BLoC 集成指南](doc/integration/bloc_integration.md) - 完整集成方案
+- [事件优先级](doc/advanced/priority.md) - 优先级系统
+- [批量处理模式](doc/advanced/batch_mode.md) - 性能优化
+
 ## 📚 详细使用指南
 
 ### 事件优先级

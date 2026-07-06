@@ -49,7 +49,7 @@ class GebLogConfig {
   /// 是否显示监听器信息
   final bool showListenerInfo;
 
-  /// 日志前缀，默认值为 '[Geb]'
+  /// 日志前缀，默认值为 `'[Geb]'`
   final String logPrefix;
 
   /// 自定义日志输出函数，用于替换默认的 debugPrint
@@ -70,7 +70,7 @@ class GebLogConfig {
   /// [showPriority] 是否显示优先级，默认为 true
   /// [showEventData] 是否显示事件数据，默认为 false
   /// [showListenerInfo] 是否显示监听器信息，默认为 true
-  /// [logPrefix] 日志前缀，默认为 '[Geb]'
+  /// [logPrefix] 日志前缀，默认值为 `'[Geb]'`
   /// [customLogger] 自定义日志函数，可选
   /// [eventTypeFilter] 事件类型过滤器，可选
   /// [listenerIdFilter] 监听器ID过滤器，可选
