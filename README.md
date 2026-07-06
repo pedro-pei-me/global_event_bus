@@ -887,17 +887,17 @@ flutter test
 
 为保持向后兼容性，旧类名通过 typedef 保留，但建议新项目使用新的 `Geb` 前缀类名。
 
-| 旧类名                    | 新类名               | 状态        |
+| 旧类名                     | 新类名                | 状态         |
 | ------------------------- | -------------------- | ----------- |
 | GlobalEvent\<T\>          | GebEvent\<T\>        | @Deprecated |
 | BaseGlobalEvent           | GebBaseEvent         | @Deprecated |
 | EventPriority             | GebPriority          | @Deprecated |
 | EventStats                | GebStats             | @Deprecated |
 | GlobalEventLogger         | GebLogger            | @Deprecated |
-| GlobalEventLogConfig      | GebLogConfig         | @Deprecated |
+| GlobalEventLogConfig       | GebLogConfig          | @Deprecated |
 | EventLogLevel             | GebLogLevel          | @Deprecated |
 | EventHistory              | GebHistory           | @Deprecated |
-| EventHistoryConfig        | GebHistoryConfig     | @Deprecated |
+| EventHistoryConfig         | GebHistoryConfig      | @Deprecated |
 | EventBusBuilder\<T\>      | GebBuilder\<T\>      | @Deprecated |
 | EventBusSnapshot\<T\>     | GebSnapshot\<T\>     | @Deprecated |
 | EventBusConnectionState   | GebConnectionState   | @Deprecated |
