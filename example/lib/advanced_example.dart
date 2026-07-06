@@ -79,7 +79,7 @@ class _AdvancedExamplePageState extends State<AdvancedExamplePage> {
         globalEventBus.sendEvent<String>(
           type: 'user_welcome',
           data: '欢迎回来，${event.data.name}！',
-          priority: EventPriority.high,
+          priority: GebPriority.high,
         );
       },
     );
@@ -226,7 +226,7 @@ class _AdvancedExamplePageState extends State<AdvancedExamplePage> {
                       globalEventBus.sendEvent<String>(
                         type: 'user_logout',
                         data: '用户已登出',
-                        priority: EventPriority.normal,
+                        priority: GebPriority.normal,
                       );
                     },
                     child: const Text('登出'),
@@ -279,7 +279,7 @@ class UserLoginPage extends StatelessWidget {
                     globalEventBus.sendEvent<UserData>(
                       type: 'user_login',
                       data: userData,
-                      priority: EventPriority.high,
+                      priority: GebPriority.high,
                       metadata: {
                         'source': 'login_page',
                         'method': 'manual_selection',
@@ -347,7 +347,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
     globalEventBus.sendEvent<List<CartItem>>(
       type: 'cart_updated',
       data: List.from(_localCart),
-      priority: EventPriority.normal,
+      priority: GebPriority.normal,
       metadata: {
         'action': 'add_item',
         'productId': product['id'],

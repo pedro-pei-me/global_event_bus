@@ -1,208 +1,124 @@
-/// 事件优先级枚举
+/// 事件优先级枚举，用于控制事件处理顺序。
 ///
-/// 定义事件的优先级级别，用于控制事件的处理顺序。
-/// 优先级越高的事件会被越早处理。
-///
-/// 优先级从低到高依次为：
-/// - [low]: 低优先级，用于非紧急的后台任务或数据同步
-/// - [normal]: 普通优先级，默认级别，用于大多数常规事件
-/// - [high]: 高优先级，用于重要的用户交互或UI更新
-/// - [critical]: 关键优先级，用于必须立即处理的关键事件
-///
-/// 示例：
-/// ```dart
-/// // 发送高优先级事件
-/// globalEventBus.sendEvent<String>(
-///   type: 'user_action',
-///   data: 'button_click',
-///   priority: EventPriority.high,
-/// );
-/// ```
-enum EventPriority {
-  /// 低优先级：用于非紧急的后台任务或数据同步
+/// 优先级从低到高：[low] < [normal] < [high] < [critical]
+/// 在批量模式下，高优先级事件会先于低优先级事件被处理。
+enum GebPriority {
+  /// 低优先级，用于非紧急事件
   low(0),
 
-  /// 普通优先级：默认级别，用于大多数常规事件
+  /// 正常优先级，默认值
   normal(1),
 
-  /// 高优先级：用于重要的用户交互或UI更新
+  /// 高优先级，用于重要事件
   high(2),
 
-  /// 关键优先级：用于必须立即处理的关键事件
+  /// 最高优先级，用于关键事件
   critical(3);
 
-  const EventPriority(this.value);
+  const GebPriority(this.value);
 
-  /// 优先级的数值表示，数值越大优先级越高
+  /// 优先级数值，数值越大优先级越高
   final int value;
 }
 
-/// 事件统计信息类
+@Deprecated('Use GebPriority instead. Will be removed in a future version')
+typedef EventPriority = GebPriority;
+
+/// 全局事件总线的统计信息类。
 ///
-/// 用于跟踪和记录事件系统的运行统计数据，包括发送和接收的事件数量、
-/// 事件类型分布以及最后事件时间等信息。
-///
-/// 该实例通常由 [GlobalEventManager] 内部管理，
-/// 可通过 [GlobalEventBus.stats] 属性访问。
-///
-/// 示例：
-/// ```dart
-/// final stats = globalEventBus.stats;
-/// print('已发送事件: ${stats.totalEventsSent}');
-/// print('已接收事件: ${stats.totalEventsReceived}');
-/// print('事件类型分布: ${stats.eventTypeCount}');
-/// ```
-class EventStats {
+/// 记录事件发送和接收的统计数据，用于监控和性能分析。
+class GebStats {
   /// 已发送的事件总数
   int totalEventsSent = 0;
 
   /// 已接收的事件总数
   int totalEventsReceived = 0;
 
-  /// 各事件类型的发送次数统计
-  ///
-  /// Key 为事件类型标识符，Value 为该类型事件的发送次数
+  /// 按事件类型统计的发送次数
   final Map<String, int> eventTypeCount = {};
 
-  /// 最后一个事件的发生时间
+  /// 最后一次事件发送的时间
   DateTime? lastEventTime;
 
-  /// 记录一次事件发送
+  /// 记录已发送的事件
   ///
-  /// 内部方法，用于更新发送统计信息。
-  /// 每次发送事件时由事件管理器自动调用。
-  ///
-  /// 参数：
-  /// - [type] 事件类型标识符
+  /// [type] 事件类型
   void recordSentEvent(String type) {
     totalEventsSent++;
     eventTypeCount[type] = (eventTypeCount[type] ?? 0) + 1;
     lastEventTime = DateTime.now();
   }
 
-  /// 记录一次事件接收
-  ///
-  /// 内部方法，用于更新接收统计信息。
-  /// 每次监听器接收到事件时自动调用。
+  /// 记录已接收的事件
   void recordReceivedEvent() {
     totalEventsReceived++;
   }
 }
 
-/// 基础事件类
+@Deprecated('Use GebStats instead. Will be removed in a future version')
+typedef EventStats = GebStats;
+
+/// 所有事件的基类，定义事件的通用属性。
 ///
-/// 所有全局事件的抽象基类，定义了事件的基本属性和行为。
-/// 每个事件实例都包含类型标识、时间戳、唯一ID、优先级和可选的元数据。
-///
-/// 该类为抽象类，不能直接实例化。请使用 [GlobalEvent<T>] 来创建具体的事件实例。
-///
-/// 主要属性：
-/// - [type]: 事件类型标识符，用于区分不同的事件
-/// - [timestamp]: 事件创建的时间戳
-/// - [eventId]: 事件的唯一标识符
-/// - [priority]: 事件的优先级
-/// - [metadata]: 可选的元数据，用于传递额外信息
-abstract class BaseGlobalEvent {
-  /// 事件类型标识符
-  ///
-  /// 用于区分不同的事件类型，监听器可以根据此属性过滤事件。
-  /// 建议使用有意义的字符串，如 'user_login'、'data_updated' 等。
+/// 包含事件类型、时间戳、事件ID、优先级和元数据。
+abstract class GebBaseEvent {
+  /// 事件类型，用于区分不同种类的事件
   final String type;
 
-  /// 事件创建的时间戳
-  ///
-  /// 自动设置为事件实例化时的当前时间。
+  /// 事件创建时间
   final DateTime timestamp;
 
-  /// 事件的唯一标识符
-  ///
-  /// 由系统自动生成，格式为 "时间戳_计数器"，
-  /// 用于追踪和调试特定事件实例。
+  /// 事件唯一标识符
   final String eventId;
 
-  /// 事件的优先级
-  ///
-  /// 决定事件在批量处理时的执行顺序。优先级越高的事件越先被处理。
-  /// 默认值为 [EventPriority.normal]。
-  final EventPriority priority;
+  /// 事件优先级
+  final GebPriority priority;
 
-  /// 事件的元数据
-  ///
-  /// 可选的键值对集合，用于传递额外的上下文信息。
-  /// 例如：{'source': 'login_page', 'version': '1.0'}
+  /// 事件元数据，可存储额外信息
   final Map<String, dynamic>? metadata;
 
-  /// 创建基础事件实例
+  /// 创建一个基础事件
   ///
-  /// 参数：
-  /// - [type] 事件类型标识符（必填）
-  /// - [priority] 事件优先级，默认为 [EventPriority.normal]
-  /// - [metadata] 可选的事件元数据
-  BaseGlobalEvent({
+  /// [type] 事件类型，必填
+  /// [priority] 事件优先级，默认为 [GebPriority.normal]
+  /// [metadata] 事件元数据，可选
+  GebBaseEvent({
     required this.type,
-    this.priority = EventPriority.normal,
+    this.priority = GebPriority.normal,
     this.metadata,
   })  : timestamp = DateTime.now(),
         eventId = _generateEventId();
 
-  /// 事件ID计数器
-  ///
-  /// 用于生成唯一的事件ID，确保同一毫秒内的事件也有不同的ID。
   static int _counter = 0;
 
   /// 生成唯一的事件ID
-  ///
-  /// 使用毫秒时间戳和递增计数器组合生成唯一标识符。
-  /// 格式："{millisecondsSinceEpoch}_{counter}"
   static String _generateEventId() {
     return '${DateTime.now().millisecondsSinceEpoch}_${_counter++}';
   }
 
   @override
   String toString() {
-    return 'GlobalEvent{type: $type, priority: $priority, timestamp: $timestamp}';
+    return 'GebEvent{type: $type, priority: $priority, timestamp: $timestamp}';
   }
 }
 
-/// 泛型全局事件类
+@Deprecated('Use GebBaseEvent instead. Will be removed in a future version')
+typedef BaseGlobalEvent = GebBaseEvent;
+
+/// 带类型数据的事件类，继承自 [GebBaseEvent]。
 ///
-/// 继承自 [BaseGlobalEvent]，添加了类型安全的数据承载能力。
-/// 这是实际使用中最常用的事件类型，可以携带任意类型的数据。
-///
-/// 泛型参数：
-/// - [T]: 事件数据的类型，可以是任何 Dart 类型
-///
-/// 示例：
-/// ```dart
-/// // 创建字符串类型的事件
-/// final stringEvent = GlobalEvent<String>(
-///   type: 'message',
-///   data: 'Hello World',
-///   priority: EventPriority.high,
-/// );
-///
-/// // 创建复杂对象类型的事件
-/// final userEvent = GlobalEvent<UserInfo>(
-///   type: 'user_login',
-///   data: UserInfo(id: '123', name: 'John'),
-///   metadata: {'source': 'login_page'},
-/// );
-/// ```
-class GlobalEvent<T> extends BaseGlobalEvent {
-  /// 事件携带的数据
-  ///
-  /// 类型为泛型 T，可以是任何 Dart 类型。
-  /// 这是事件的主要内容，用于在应用的不同模块之间传递信息。
+/// 使用泛型 [T] 来指定事件携带的数据类型，提供编译时类型安全。
+class GebEvent<T> extends GebBaseEvent {
+  /// 事件携带的数据，类型由泛型 [T] 指定
   final T data;
 
-  /// 创建泛型全局事件实例
+  /// 创建一个带数据的事件
   ///
-  /// 参数：
-  /// - [type] 事件类型标识符（必填）
-  /// - [data] 事件携带的数据（必填）
-  /// - [priority] 事件优先级，默认为 [EventPriority.normal]
-  /// - [metadata] 可选的事件元数据
-  GlobalEvent({
+  /// [type] 事件类型，必填
+  /// [data] 事件数据，必填，类型为 [T]
+  /// [priority] 事件优先级，默认为 [GebPriority.normal]
+  /// [metadata] 事件元数据，可选
+  GebEvent({
     required super.type,
     required this.data,
     super.priority,
@@ -211,6 +127,169 @@ class GlobalEvent<T> extends BaseGlobalEvent {
 
   @override
   String toString() {
-    return 'GlobalEvent{type: $type, data: $data, priority: $priority, timestamp: $timestamp}';
+    return 'GebEvent{type: $type, data: $data, priority: $priority, timestamp: $timestamp}';
   }
 }
+
+@Deprecated('Use GebEvent<T> instead. Will be removed in a future version')
+typedef GlobalEvent<T> = GebEvent<T>;
+
+/// 事件历史记录配置类。
+///
+/// 用于配置事件历史记录的行为，包括是否启用和最大记录数。
+class GebHistoryConfig {
+  /// 是否启用事件历史记录
+  final bool enabled;
+
+  /// 历史记录的最大条数，超过后会自动删除最早的记录
+  final int maxHistorySize;
+
+  /// 创建历史记录配置
+  ///
+  /// [enabled] 是否启用，默认为 true
+  /// [maxHistorySize] 最大记录数，默认为 100
+  const GebHistoryConfig({
+    this.enabled = true,
+    this.maxHistorySize = 100,
+  });
+
+  /// 默认配置：启用，最大100条记录
+  static const GebHistoryConfig defaultConfig = GebHistoryConfig();
+
+  /// 禁用配置：不记录历史
+  static const GebHistoryConfig disabled = GebHistoryConfig(enabled: false);
+
+  /// 创建一个新的配置，可选择性覆盖原有配置
+  GebHistoryConfig copyWith({
+    bool? enabled,
+    int? maxHistorySize,
+  }) {
+    return GebHistoryConfig(
+      enabled: enabled ?? this.enabled,
+      maxHistorySize: maxHistorySize ?? this.maxHistorySize,
+    );
+  }
+}
+
+@Deprecated('Use GebHistoryConfig instead. Will be removed in a future version')
+typedef EventHistoryConfig = GebHistoryConfig;
+
+/// 事件历史记录管理器。
+///
+/// 负责记录、查询和管理事件历史，支持按类型、数量等多种方式查询。
+class GebHistory {
+  final List<GebBaseEvent> _events = [];
+  GebHistoryConfig _config = GebHistoryConfig.defaultConfig;
+
+  /// 更新历史记录配置
+  ///
+  /// 如果配置为禁用，会清空所有历史记录
+  void configure(GebHistoryConfig config) {
+    _config = config;
+    if (!config.enabled) {
+      clear();
+    }
+  }
+
+  /// 当前配置
+  GebHistoryConfig get config => _config;
+
+  /// 添加事件到历史记录
+  ///
+  /// 如果历史记录已禁用，则不添加
+  void addEvent(GebBaseEvent event) {
+    if (!_config.enabled) return;
+
+    _events.add(event);
+
+    while (_events.length > _config.maxHistorySize) {
+      _events.removeAt(0);
+    }
+  }
+
+  /// 获取所有历史事件（不可修改）
+  List<GebBaseEvent> get all => List.unmodifiable(_events);
+
+  /// 获取所有历史事件，按时间倒序（不可修改）
+  List<GebBaseEvent> get allReversed => List.unmodifiable(_events.reversed);
+
+  /// 获取最近的 [count] 个事件，按时间倒序
+  ///
+  /// [count] 获取的事件数量，小于等于0时返回空列表
+  List<GebBaseEvent> getRecent(int count) {
+    if (count <= 0) return [];
+    final start = _events.length - count;
+    final recent = _events.sublist(start > 0 ? start : 0);
+    return List.unmodifiable(recent.reversed);
+  }
+
+  /// 获取指定类型的所有历史事件
+  ///
+  /// [type] 事件类型
+  List<GebBaseEvent> getByType(String type) {
+    return List.unmodifiable(
+      _events.where((event) => event.type == type),
+    );
+  }
+
+  /// 获取指定类型最近的 [count] 个事件，按时间倒序
+  ///
+  /// [type] 事件类型
+  /// [count] 获取的事件数量，默认为1
+  List<GebBaseEvent> getRecentByType(String type, {int count = 1}) {
+    if (count <= 0) return [];
+    final events = _events.where((event) => event.type == type).toList();
+    final start = events.length - count;
+    final recent = events.sublist(start > 0 ? start : 0);
+    return List.unmodifiable(recent.reversed);
+  }
+
+  /// 获取指定类型的最后一个事件
+  ///
+  /// [type] 事件类型，不存在时返回 null
+  GebBaseEvent? getLastByType(String type) {
+    for (var i = _events.length - 1; i >= 0; i--) {
+      if (_events[i].type == type) {
+        return _events[i];
+      }
+    }
+    return null;
+  }
+
+  /// 获取所有已记录的事件类型
+  List<String> get eventTypes {
+    return _events.map((event) => event.type).toSet().toList();
+  }
+
+  /// 当前历史记录的事件数量
+  int get count => _events.length;
+
+  /// 检查是否存在指定类型的事件
+  ///
+  /// [type] 事件类型
+  bool hasType(String type) {
+    return _events.any((event) => event.type == type);
+  }
+
+  /// 清空所有历史记录
+  void clear() {
+    _events.clear();
+  }
+
+  /// 删除指定类型的所有历史事件
+  ///
+  /// [type] 要删除的事件类型
+  void removeByType(String type) {
+    _events.removeWhere((event) => event.type == type);
+  }
+
+  /// 删除指定事件ID的历史事件
+  ///
+  /// [eventId] 事件ID
+  void removeByEventId(String eventId) {
+    _events.removeWhere((event) => event.eventId == eventId);
+  }
+}
+
+@Deprecated('Use GebHistory instead. Will be removed in a future version')
+typedef EventHistory = GebHistory;

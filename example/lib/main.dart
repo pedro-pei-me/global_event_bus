@@ -3,13 +3,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:global_event_bus/global_event_bus.dart';
-import 'advanced_example.dart'; // 添加这行导入
+import 'advanced_example.dart';
+import 'event_bus_builder_demo.dart';
+import 'bloc_simple_demo.dart';
 
 void main() {
   // 配置全局事件总线日志
   globalEventBus.configureLogging(
-    const GlobalEventLogConfig(
-      level: EventLogLevel.debug,
+    const GebLogConfig(
+      level: GebLogLevel.debug,
       showEventData: true,
       showEventId: true,
       showListenerInfo: true,
@@ -109,12 +111,12 @@ class _HomePageState extends State<HomePage> {
 
     // 发送不同优先级的事件
     final priority = newValue % 4 == 0
-        ? EventPriority.critical
+        ? GebPriority.critical
         : newValue % 3 == 0
-            ? EventPriority.high
+            ? GebPriority.high
             : newValue % 2 == 0
-                ? EventPriority.normal
-                : EventPriority.low;
+                ? GebPriority.normal
+                : GebPriority.low;
 
     globalEventBus.sendEvent<int>(
       type: 'counter_updated',
@@ -138,7 +140,7 @@ class _HomePageState extends State<HomePage> {
         'username': randomUser,
         'loginTime': DateTime.now().toIso8601String(),
       },
-      priority: EventPriority.high,
+      priority: GebPriority.high,
     );
 
     // 延迟发送欢迎通知
@@ -146,7 +148,7 @@ class _HomePageState extends State<HomePage> {
       globalEventBus.sendEvent<String>(
         type: 'notification_received',
         data: '欢迎 $randomUser！',
-        priority: EventPriority.normal,
+        priority: GebPriority.normal,
       );
     });
   }
@@ -155,20 +157,19 @@ class _HomePageState extends State<HomePage> {
     globalEventBus.sendEvent<Map<String, dynamic>>(
       type: 'user_status_changed',
       data: {'status': '已登出', 'logoutTime': DateTime.now().toIso8601String()},
-      priority: EventPriority.normal,
+      priority: GebPriority.normal,
     );
   }
 
   void _sendRandomNotification() {
     final notifications = ['您有新消息', '系统更新完成', '数据同步成功', '任务执行完毕', '网络连接恢复'];
 
-    final randomNotification =
-        notifications[Random().nextInt(notifications.length)];
+    final randomNotification = notifications[Random().nextInt(notifications.length)];
 
     globalEventBus.sendEvent<String>(
       type: 'notification_received',
       data: randomNotification,
-      priority: EventPriority.low,
+      priority: GebPriority.low,
     );
   }
 
@@ -181,7 +182,7 @@ class _HomePageState extends State<HomePage> {
       globalEventBus.sendEvent<String>(
         type: 'notification_received',
         data: '批量通知 $i',
-        priority: EventPriority.low,
+        priority: GebPriority.low,
       );
     }
 
@@ -283,6 +284,36 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: const Text('高级示例'),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GebBuilderDemoPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('EventBusBuilder'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BlocSimpleDemoPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('BLoC 集成'),
+                ),
               ],
             ),
 
@@ -370,8 +401,7 @@ class _StatsPageState extends State<StatsPage> {
                     Text(
                       '批量模式: ${performanceInfo['batchEnabled'] ? "启用" : "禁用"}',
                     ),
-                    if (stats.lastEventTime != null)
-                      Text('最后事件时间: ${stats.lastEventTime}'),
+                    if (stats.lastEventTime != null) Text('最后事件时间: ${stats.lastEventTime}'),
                   ],
                 ),
               ),

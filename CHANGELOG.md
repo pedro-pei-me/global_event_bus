@@ -5,6 +5,74 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-07-06
+
+#### 🚀 新功能
+
+**GebBuilder - 响应式 Widget**
+
+- 新增 `GebBuilder<T>` Widget，类似于 Flutter 的 `StreamBuilder`，专门用于全局事件总线
+- 自动处理事件订阅和取消订阅
+- 支持从历史记录获取初始数据
+- 提供 `GebSnapshot<T>` 快照类，封装事件数据和连接状态
+- 支持 `GebConnectionState` 连接状态枚举（none/active/done）
+
+**GebListener - 事件监听器 Mixin**
+
+- 新增 `GebListener` Mixin，用于在 StatefulWidget 中监听事件
+- 自动管理订阅生命周期，在 Widget 销毁时自动取消所有订阅
+- 提供 `gebSubscribe<T>()` 和 `gebSubscribeOnce<T>()` 方法
+- 新增 `GebNoDataListener` Mixin，专门用于监听无数据事件
+
+**GebBlocBridge - BLoC 集成**
+
+- 新增 `GebBlocBridge<Event, State>` 桥接器，实现 BLoC 和事件总线的双向通信
+- BLoC 状态变更自动发送到事件总线
+- 支持将事件总线事件转发到 BLoC
+- 新增 `GebBlocMixin<State>`，用于在 BLoC 类中直接集成事件总线
+- 新增 `GebBlocMapper` 工具类，提供多种预定义的事件映射方法
+- 新增 `global_event_bus_bloc.dart` 导出文件，方便 BLoC 集成
+
+**GebHistory - 事件历史记录**
+
+- 新增 `GebHistory` 事件历史记录管理器
+- 支持按类型、数量等多种方式查询历史事件
+- 提供 `GebHistoryConfig` 配置类，可配置是否启用和最大记录数
+- GlobalEventBus API 新增 `history`、`configureHistory()`、`getRecentEvents()` 等方法
+
+**日志配置增强**
+
+- `GebLogConfig` 新增预设配置：`debugConfig`、`productionConfig`、`silentConfig`
+- 新增 `copyWith()` 方法，支持选择性覆盖配置
+- 新增 `listenerIdFilter` 过滤器，支持按监听器ID过滤日志
+
+**类命名重构**
+
+- 所有核心类添加 `Geb` 前缀（如 `GebEvent<T>`、`GebPriority`、`GebLogger`）
+- 通过 typedef 和 @Deprecated 保持向后兼容性（如 `GlobalEvent<T> = GebEvent<T>`）
+- 支持旧类名继续使用，但会显示废弃警告
+
+#### 🔧 改进
+
+- 使用 `is` 类型检查替代直接类型转换，避免 CastError
+- State 更新前检查 `mounted` 属性，防止 Flutter 框架断言错误
+- 优化批量模式下的事件排序和发送逻辑
+- 增强错误处理和异常捕获机制
+
+#### 📝 文档
+
+- 更新 README.md，添加所有新功能的详细文档和使用示例
+- 完善示例项目，添加 GebBuilder 和 BLoC 集成演示页面
+- 更新 API 参数说明，使用新的 Geb 前缀类名
+
+#### ⚠️ 向后兼容性
+
+- 所有旧类名（如 `GlobalEvent<T>`、`EventPriority`）通过 typedef 保留
+- 旧类名标记为 @Deprecated，会显示废弃警告
+- 建议新项目使用新的 Geb 前缀类名
+
+---
+
 ## [1.1.0] - 2026-06-18
 
 #### 📝 Documentation

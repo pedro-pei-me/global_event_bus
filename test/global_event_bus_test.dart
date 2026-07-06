@@ -123,19 +123,19 @@ void main() {
       eventBus.sendEvent<String>(
         type: 'priority_event',
         data: 'Low priority',
-        priority: EventPriority.low,
+        priority: GebPriority.low,
       );
 
       eventBus.sendEvent<String>(
         type: 'priority_event',
         data: 'High priority',
-        priority: EventPriority.high,
+        priority: GebPriority.high,
       );
 
       eventBus.sendEvent<String>(
         type: 'priority_event',
         data: 'Normal priority',
-        priority: EventPriority.normal,
+        priority: GebPriority.normal,
       );
 
       await completer.future.timeout(const Duration(seconds: 2));
