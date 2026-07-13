@@ -5,7 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.3.0] - 2026-07-06
+## [1.3.1]
+
+Release date: 2026-07-13
+
+### 📝 Documentation Improvements
+
+- Updated `README.md` with complete English documentation including API references and usage examples
+- Added `README_CN.md` with Chinese documentation for domestic users
+- Updated `CHANGELOG.md` with full English content
+- Added author and topics fields to `pubspec.yaml` for better pub.dev discoverability
+- Improved documentation structure and navigation links
+- Fixed `.pubignore` to include `doc/` directory while excluding `doc/api/` build artifacts
+
+### 🔧 Package Metadata
+
+- Added `author` field to `pubspec.yaml`
+- Added `topics` field with relevant tags (event-bus, state-management, communication, flutter, bloc, debugging)
+
+---
+
+## [1.3.0]
+
+Release date: 2026-07-06
 
 ### 🚀 New Features
 
@@ -51,7 +73,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.2.0] - 2026-07-06
+## [1.2.0]
+
+Release date: 2026-07-06
 
 ### 🚀 New Features
 
@@ -113,7 +137,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.0] - 2026-06-18
+## [1.1.0]
+
+Release date: 2026-06-18
 
 ### 📝 Documentation
 
@@ -137,7 +163,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.2] - 2025-08-26
+## [1.0.2]
+
+Release date: 2025-08-26
 
 ### 🚀 Release Improvements
 
@@ -148,7 +176,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.1] - 2025-01-26
+## [1.0.1]
+
+Release date: 2025-01-26
 
 ### 🔧 Code Quality Improvements
 
@@ -159,7 +189,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - Previous Version
+## [1.0.0]
+
+Release date: Not specified
 
 ### 🎉 Major Release - Pure Dart Package
 
@@ -200,6 +232,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 
 ## [Unreleased]
 
+Release date: Not specified
+
 ### 🚀 Planned Features
 
 - Event persistence support
@@ -209,6 +243,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 ---
 
 ## [0.0.7]
+
+Release date: Not specified
 
 ### 🔧 Improvements
 
@@ -228,6 +264,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 ---
 
 ## [0.0.6]
+
+Release date: Not specified
 
 ### 🚀 New Features
 
@@ -272,6 +310,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 
 ## [0.0.5]
 
+Release date: Not specified
+
 ### 🚀 New Features
 
 - Support for optional data field when sending events (GlobalEvent class modified to T? type)
@@ -285,6 +325,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 ---
 
 ## [0.0.4]
+
+Release date: Not specified
 
 ### 🐛 Fixes
 
@@ -312,6 +354,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 ---
 
 ## [0.0.3]
+
+Release date: Not specified
 
 ### 🚀 New Features
 
@@ -348,6 +392,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 
 ## [0.0.2]
 
+Release date: Not specified
+
 ### 🚀 New Features
 
 - Reduced minimum Flutter SDK version requirement to 3.0.0 for improved compatibility
@@ -374,6 +420,8 @@ If you previously used the `getPlatformVersion()` method, please remove related 
 ---
 
 ## [0.0.1]
+
+Release date: Not specified
 
 ### 🎉 Initial Release
 

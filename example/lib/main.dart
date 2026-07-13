@@ -455,7 +455,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 8),
             Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: color)),
             const SizedBox(height: 4),
-            Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey)),
+            Text(subtitle, style: const TextStyle(fontSize: 12, color: Colors.grey)),
           ],
         ),
       ),
