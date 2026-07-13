@@ -14,7 +14,7 @@ windows/
 .fvmrc
 
 # Documentation build files
-doc/
+doc/api/
 
 # Test coverage files
 coverage/

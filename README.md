@@ -1,4 +1,4 @@
-# 🚀 Global Event Bus - 全局事件总线
+# 🚀 Global Event Bus
 
 <div align="center">
   <img src="assets/icons/animated_logo.svg" alt="Global Event Bus Logo" width="400" height="200">
@@ -7,123 +7,123 @@
 [![pub package](https://img.shields.io/pub/v/global_event_bus.svg)](https://pub.dev/packages/global_event_bus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-一个高性能、类型安全的 Flutter 全局事件分发系统，用于在应用程序的不同模块之间进行解耦通信。采用观察者模式和流式处理架构，支持事件优先级、批量处理、延迟发送、统计监控、响应式 Widget、BLoC 集成等高级功能。
+A high-performance, type-safe global event bus system for Flutter applications, enabling decoupled communication between different modules. Built on the observer pattern and stream processing architecture, it supports event priorities, batch processing, delayed sending, statistics monitoring, reactive Widgets, BLoC integration, and other advanced features.
 
-## ✨ 核心特性
+## ✨ Core Features
 
-### 🔒 类型安全
+### 🔒 Type Safety
 
-- 基于泛型的类型安全事件系统
-- 编译时类型检查，避免运行时错误
-- 自动类型推断，提升开发体验
+- Generic-based type-safe event system
+- Compile-time type checking to avoid runtime errors
+- Automatic type inference for better development experience
 
-### ⚡ 高性能
+### ⚡ High Performance
 
-- 基于 Dart Stream 的高效事件分发
-- 支持批量处理模式，优化高频事件场景
-- 内置事件统计和性能监控
+- Efficient event distribution based on Dart Stream
+- Batch processing mode for high-frequency event scenarios
+- Built-in event statistics and performance monitoring
 
-### 🎯 事件优先级
+### 🎯 Event Priority
 
-- 四级优先级系统：critical、high、normal、low
-- 高优先级事件优先处理
-- 适用于不同业务场景的事件分级
+- Four-level priority system: critical, high, normal, low
+- High-priority events are processed first
+- Suitable for event classification in different business scenarios
 
-### 📊 完善的日志系统
+### 📊 Comprehensive Logging System
 
-- 多级别日志配置（debug、info、warning、error、none）
-- 可配置的日志输出格式
-- 支持自定义日志处理器
-- 事件类型和监听器过滤
+- Multi-level log configuration (debug, info, warning, error, none)
+- Configurable log output format
+- Support for custom log handlers
+- Event type and listener filtering
 
-### 🔧 灵活的监听方式
+### 🔧 Flexible Listening
 
-- 类型监听：只监听特定类型的事件
-- 一次性监听：监听一次后自动移除
-- 多类型监听：同时监听多种事件类型
-- 延迟发送：支持延迟指定时间后发送事件
+- Type listening: only listen for specific event types
+- One-time listening: automatically removed after first trigger
+- Multi-type listening: listen for multiple event types simultaneously
+- Delayed sending: support sending events after a specified delay
 
-### 📈 统计监控
+### 📈 Statistics Monitoring
 
-- 实时事件统计
-- 发送/接收计数
-- 事件类型分布统计
-- 性能监控数据
+- Real-time event statistics
+- Send/receive counting
+- Event type distribution statistics
+- Performance monitoring data
 
-### 🎨 响应式 Widget
+### 🎨 Reactive Widget
 
-- **GebBuilder**: 类似 StreamBuilder 的响应式 Widget
-- 自动管理订阅生命周期
-- 支持从历史记录获取初始数据
+- **GebBuilder**: StreamBuilder-like reactive Widget
+- Automatic subscription lifecycle management
+- Support for initial data from history
 
-### 🔄 BLoC 集成
+### 🔄 BLoC Integration
 
-- **GebBlocBridge**: BLoC 与事件总线的双向桥接器
-- **GebBlocMixin**: 在 BLoC 类中直接集成事件总线
-- **GebBlocMapper**: 事件映射工具类
+- **GebBlocBridge**: Bidirectional bridge between BLoC and event bus
+- **GebBlocMixin**: Direct event bus integration in BLoC classes
+- **GebBlocMapper**: Event mapping utility class
 
-### 📚 事件历史记录
+### 📚 Event History
 
-- **GebHistory**: 事件历史记录管理器
-- 支持按类型、数量查询历史事件
-- 可配置最大记录数和启用/禁用
+- **GebHistory**: Event history manager
+- Support querying history by type and count
+- Configurable maximum records and enable/disable
 
-## 🏗️ 核心架构
+## 🏗️ Architecture
 
 ```plantext
 ┌───────────────────────────────────────┐
 │ Global Event Bus                      │
 ├───────────────────────────────────────┤
-│ GlobalEventManager (单例事件管理器)     │
-│ ├── 事件发送与分发                      │
-│ ├── 监听器管理                         │
-│ ├── 批量处理                           │
-│ └── 统计监控                           │
+│ GlobalEventManager (Singleton)        │
+│ ├── Event Sending & Dispatching       │
+│ ├── Listener Management               │
+│ ├── Batch Processing                  │
+│ └── Statistics Monitoring             │
 ├───────────────────────────────────────┤
-│ BaseGlobalEvent (事件基类)             │
-│ ├── 事件类型标识                        │
-│ ├── 时间戳                             │
-│ ├── 优先级                             │
-│ └── 元数据                             │
+│ GebBaseEvent (Base Event Class)       │
+│ ├── Event Type Identifier             │
+│ ├── Timestamp                        │
+│ ├── Priority                         │
+│ └── Metadata                         │
 ├───────────────────────────────────────┤
-│ GlobalEvent(泛型事件类)                 │
-│ └── 类型安全的数据传递                   │
+│ GebEvent<T> (Generic Event Class)     │
+│ └── Type-safe Data Transfer          │
 ├───────────────────────────────────────┤
-│ GlobalEventLogger (日志系统)           │
-│ ├── 多级别日志                         │
-│ ├── 可配置输出格式                      │
-│ └── 自定义处理器                        │
+│ GebLogger (Logging System)            │
+│ ├── Multi-level Logging               │
+│ ├── Configurable Output Format        │
+│ └── Custom Handler                    │
 └───────────────────────────────────────┘
 ```
 
-## 📦 安装
+## 📦 Installation
 
-在 `pubspec.yaml` 文件中添加依赖：
+Add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
   global_event_bus: <latest_version>
 ```
 
-然后运行：
+Then run:
 
 ```zsh
-flutter pub get
+flutter pub get
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 1. 导入包
+### 1. Import Package
 
 ```dart
 import 'package:global_event_bus/global_event_bus.dart';
 ```
 
-### 2. 配置日志（可选）
+### 2. Configure Logging (Optional)
 
 ```dart
 void main() {
-  // 配置全局事件总线日志
+  // Configure global event bus logging
   globalEventBus.configureLogging(
     const GebLogConfig(
       level: GebLogLevel.debug,
@@ -137,16 +137,16 @@ void main() {
 }
 ```
 
-### 3. 发送事件
+### 3. Send Events
 
 ```dart
-// 发送简单事件
+// Send simple event
 globalEventBus.sendEvent<String>(
   type: 'user_message',
   data: 'Hello, World!',
 );
 
-// 发送带优先级的事件
+// Send event with priority
 globalEventBus.sendEvent<Map<String, dynamic>>(
   type: 'user_login',
   data: {
@@ -157,18 +157,18 @@ globalEventBus.sendEvent<Map<String, dynamic>>(
   priority: GebPriority.high,
 );
 
-// 延迟发送事件
+// Send delayed event
 globalEventBus.sendEventDelayed<String>(
   type: 'delayed_notification',
-  data: '这是一个延迟消息',
-  delay: Duration(milliseconds: 3000), // 3秒后发送
+  data: 'This is a delayed message',
+  delay: Duration(milliseconds: 3000), // Send after 3 seconds
 );
 
-// 发送无数据事件
+// Send event without data
 globalEventBus.sendEventWithoutData(type: 'app_started');
 ```
 
-### 4. 监听事件
+### 4. Listen to Events
 
 ```dart
 class MyWidget extends StatefulWidget {
@@ -183,14 +183,14 @@ class _MyWidgetState extends State<MyWidget> {
   void initState() {
     super.initState();
 
-    // 监听特定类型的事件
+    // Listen for specific event type
     _subscription = globalEventBus.listen<String>(
       listenerId: 'my_widget_listener',
       onEvent: (GebEvent<String> event) {
-        print('收到事件: ${event.type}, 数据: ${event.data}');
-        // 处理事件数据
+        print('Received event: ${event.type}, data: ${event.data}');
+        // Handle event data
         setState(() {
-          // 更新UI
+          // Update UI
         });
       },
     );
@@ -198,16 +198,16 @@ class _MyWidgetState extends State<MyWidget> {
 
   @override
   void dispose() {
-    _subscription.cancel(); // 取消订阅
+    _subscription.cancel(); // Cancel subscription
     super.dispose();
   }
 }
 ```
 
-### 5. 使用 GebBuilder（推荐）
+### 5. Use GebBuilder (Recommended)
 
 ```dart
-// 使用响应式 Widget 监听事件，自动管理生命周期
+// Use reactive Widget to listen to events, auto-manage lifecycle
 class CounterDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -215,16 +215,16 @@ class CounterDisplay extends StatelessWidget {
       eventType: 'counter_updated',
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const Text('计数器: 0');
+          return const Text('Counter: 0');
         }
-        return Text('计数器: ${snapshot.data}');
+        return Text('Counter: ${snapshot.data}');
       },
     );
   }
 }
 ```
 
-### 6. 使用 GebListener Mixin
+### 6. Use GebListener Mixin
 
 ```dart
 class MyWidget extends StatefulWidget {
@@ -233,13 +233,13 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> with GebListener {
-  String _message = '等待事件...';
+  String _message = 'Waiting for events...';
 
   @override
   void initState() {
     super.initState();
 
-    // 使用 Mixin 方法订阅事件
+    // Subscribe to events using Mixin method
     gebSubscribe<String>(
       listenerId: 'message_listener',
       eventType: 'user_message',
@@ -256,139 +256,139 @@ class _MyWidgetState extends State<MyWidget> with GebListener {
     return Text(_message);
   }
 
-  // dispose 时自动取消所有订阅，无需手动处理
+  // All subscriptions automatically cancelled on dispose
 }
 ```
 
-### API 参数说明
+### API Reference
 
-#### 事件发送方法
+#### Event Sending Methods
 
-**sendEvent<T>** - 发送带数据的事件
+**sendEvent<T>** - Send event with data
 
-| 参数名   | 类型                  | 必需 | 默认值             | 说明           |
-| -------- | --------------------- | ---- | ------------------ | -------------- |
-| type     | String                | ✅   | -                  | 事件类型标识符 |
-| data     | T                     | ✅   | -                  | 事件携带的数据 |
-| priority | GebPriority           | ❌   | GebPriority.normal | 事件优先级     |
-| metadata | Map<String, dynamic>? | ❌   | null               | 事件元数据     |
+| Parameter | Type                  | Required | Default            | Description           |
+| --------- | --------------------- | -------- | ------------------ | --------------------- |
+| type      | String                | ✅       | -                  | Event type identifier |
+| data      | T                     | ✅       | -                  | Event data            |
+| priority  | GebPriority           | ❌       | GebPriority.normal | Event priority        |
+| metadata  | Map<String, dynamic>? | ❌       | null               | Event metadata        |
 
-**sendEventWithoutData** - 发送无数据事件
+**sendEventWithoutData** - Send event without data
 
-| 参数名   | 类型                  | 必需 | 默认值             | 说明           |
-| -------- | --------------------- | ---- | ------------------ | -------------- |
-| type     | String                | ✅   | -                  | 事件类型标识符 |
-| priority | GebPriority           | ❌   | GebPriority.normal | 事件优先级     |
-| metadata | Map<String, dynamic>? | ❌   | null               | 事件元数据     |
+| Parameter | Type                  | Required | Default            | Description           |
+| --------- | --------------------- | -------- | ------------------ | --------------------- |
+| type      | String                | ✅       | -                  | Event type identifier |
+| priority  | GebPriority           | ❌       | GebPriority.normal | Event priority        |
+| metadata  | Map<String, dynamic>? | ❌       | null               | Event metadata        |
 
-**sendEventSafe<T>** - 安全发送事件（不抛出异常）
+**sendEventSafe<T>** - Safely send event (no exceptions thrown)
 
-| 参数名   | 类型                  | 必需 | 默认值             | 说明           |
-| -------- | --------------------- | ---- | ------------------ | -------------- |
-| type     | String                | ✅   | -                  | 事件类型标识符 |
-| data     | T                     | ✅   | -                  | 事件携带的数据 |
-| priority | GebPriority           | ❌   | GebPriority.normal | 事件优先级     |
-| metadata | Map<String, dynamic>? | ❌   | null               | 事件元数据     |
+| Parameter | Type                  | Required | Default            | Description           |
+| --------- | --------------------- | -------- | ------------------ | --------------------- |
+| type      | String                | ✅       | -                  | Event type identifier |
+| data      | T                     | ✅       | -                  | Event data            |
+| priority  | GebPriority           | ❌       | GebPriority.normal | Event priority        |
+| metadata  | Map<String, dynamic>? | ❌       | null               | Event metadata        |
 
-**sendEventDelayed<T>** - 延迟发送事件
+**sendEventDelayed<T>** - Send event with delay
 
-| 参数名   | 类型                  | 必需 | 默认值             | 说明           |
-| -------- | --------------------- | ---- | ------------------ | -------------- |
-| type     | String                | ✅   | -                  | 事件类型标识符 |
-| data     | T                     | ✅   | -                  | 事件携带的数据 |
-| delay    | Duration              | ✅   | -                  | 延迟时间       |
-| priority | GebPriority           | ❌   | GebPriority.normal | 事件优先级     |
-| metadata | Map<String, dynamic>? | ❌   | null               | 事件元数据     |
+| Parameter | Type                  | Required | Default            | Description           |
+| --------- | --------------------- | -------- | ------------------ | --------------------- |
+| type      | String                | ✅       | -                  | Event type identifier |
+| data      | T                     | ✅       | -                  | Event data            |
+| delay     | Duration              | ✅       | -                  | Delay duration        |
+| priority  | GebPriority           | ❌       | GebPriority.normal | Event priority        |
+| metadata  | Map<String, dynamic>? | ❌       | null               | Event metadata        |
 
-#### 事件监听方法
+#### Event Listening Methods
 
-**listen<T>** - 监听事件
+**listen<T>** - Listen to events
 
-| 参数名     | 类型                  | 必需 | 默认值 | 说明                   |
-| ---------- | --------------------- | ---- | ------ | ---------------------- |
-| listenerId | String                | ✅   | -      | 监听器唯一标识符       |
-| onEvent    | Function(GebEvent<T>) | ✅   | -      | 事件处理回调函数       |
-| eventTypes | List<String>?         | ❌   | null   | 指定监听的事件类型列表 |
-| onError    | Function(Object)?     | ❌   | null   | 错误回调函数           |
+| Parameter  | Type                  | Required | Default | Description                       |
+| ---------- | --------------------- | -------- | ------- | --------------------------------- |
+| listenerId | String                | ✅       | -       | Unique listener identifier        |
+| onEvent    | Function(GebEvent<T>) | ✅       | -       | Event handler callback            |
+| eventTypes | List<String>?         | ❌       | null    | List of event types to listen for |
+| onError    | Function(Object)?     | ❌       | null    | Error callback                    |
 
-**listenOnce<T>** - 一次性监听事件
+**listenOnce<T>** - Listen to event once
 
-| 参数名     | 类型                  | 必需 | 默认值 | 说明                   |
-| ---------- | --------------------- | ---- | ------ | ---------------------- |
-| listenerId | String                | ✅   | -      | 监听器唯一标识符       |
-| onEvent    | Function(GebEvent<T>) | ✅   | -      | 事件处理回调函数       |
-| eventTypes | List<String>?         | ❌   | null   | 指定监听的事件类型列表 |
+| Parameter  | Type                  | Required | Default | Description                       |
+| ---------- | --------------------- | -------- | ------- | --------------------------------- |
+| listenerId | String                | ✅       | -       | Unique listener identifier        |
+| onEvent    | Function(GebEvent<T>) | ✅       | -       | Event handler callback            |
+| eventTypes | List<String>?         | ❌       | null    | List of event types to listen for |
 
-**removeListener** - 移除监听器
+**removeListener** - Remove listener
 
-| 参数名     | 类型   | 必需 | 默认值 | 说明                 |
-| ---------- | ------ | ---- | ------ | -------------------- |
-| listenerId | String | ✅   | -      | 要移除的监听器标识符 |
+| Parameter  | Type   | Required | Default | Description              |
+| ---------- | ------ | -------- | ------- | ------------------------ |
+| listenerId | String | ✅       | -       | ID of listener to remove |
 
-**removeAllListeners** - 移除所有监听器
+**removeAllListeners** - Remove all listeners
 
-**cleanupExpiredListeners** - 清理过期的监听器
+**cleanupExpiredListeners** - Clean up expired listeners
 
-#### 日志配置方法
+#### Logging Configuration
 
-**configureLogging** - 配置日志
+**configureLogging** - Configure logging
 
-| 参数名 | 类型         | 必需 | 默认值 | 说明         |
-| ------ | ------------ | ---- | ------ | ------------ |
-| config | GebLogConfig | ✅   | -      | 日志配置对象 |
+| Parameter | Type         | Required | Default | Description              |
+| --------- | ------------ | -------- | ------- | ------------------------ |
+| config    | GebLogConfig | ✅       | -       | Log configuration object |
 
-**GebLogConfig** 配置参数
+**GebLogConfig** Parameters
 
-| 参数名           | 类型              | 必需 | 默认值           | 说明               |
-| ---------------- | ----------------- | ---- | ---------------- | ------------------ |
-| level            | GebLogLevel       | ❌   | GebLogLevel.info | 日志级别           |
-| enabled          | bool              | ❌   | true             | 是否启用日志       |
-| showTimestamp    | bool              | ❌   | true             | 是否显示时间戳     |
-| showEventId      | bool              | ❌   | false            | 是否显示事件ID     |
-| showPriority     | bool              | ❌   | true             | 是否显示优先级     |
-| showEventData    | bool              | ❌   | false            | 是否显示事件数据   |
-| showListenerInfo | bool              | ❌   | true             | 是否显示监听器信息 |
-| logPrefix        | String            | ❌   | '[GlobalEvent]'  | 自定义日志前缀     |
-| eventTypeFilter  | List<String>?     | ❌   | null             | 事件类型过滤器     |
-| listenerIdFilter | List<String>?     | ❌   | null             | 监听器ID过滤器     |
-| customLogger     | Function(String)? | ❌   | null             | 自定义日志处理函数 |
+| Parameter        | Type              | Required | Default          | Description        |
+| ---------------- | ----------------- | -------- | ---------------- | ------------------ |
+| level            | GebLogLevel       | ❌       | GebLogLevel.info | Log level          |
+| enabled          | bool              | ❌       | true             | Enable logging     |
+| showTimestamp    | bool              | ❌       | true             | Show timestamp     |
+| showEventId      | bool              | ❌       | false            | Show event ID      |
+| showPriority     | bool              | ❌       | true             | Show priority      |
+| showEventData    | bool              | ❌       | false            | Show event data    |
+| showListenerInfo | bool              | ❌       | true             | Show listener info |
+| logPrefix        | String            | ❌       | '[GlobalEvent]'  | Custom log prefix  |
+| eventTypeFilter  | List<String>?     | ❌       | null             | Event type filter  |
+| listenerIdFilter | List<String>?     | ❌       | null             | Listener ID filter |
+| customLogger     | Function(String)? | ❌       | null             | Custom log handler |
 
-**GebLogConfig 预设配置**
+**GebLogConfig Presets**
 
-| 配置                          | 说明                                |
-| ----------------------------- | ----------------------------------- |
-| GebLogConfig.defaultConfig    | 默认配置：info级别                  |
-| GebLogConfig.debugConfig      | 调试配置：debug级别，显示详细信息   |
-| GebLogConfig.productionConfig | 生产配置：error级别，不显示敏感信息 |
-| GebLogConfig.silentConfig     | 静默配置：禁用所有日志              |
+| Configuration                 | Description                                |
+| ----------------------------- | ------------------------------------------ |
+| GebLogConfig.defaultConfig    | Default: info level                        |
+| GebLogConfig.debugConfig      | Debug: debug level with detailed info      |
+| GebLogConfig.productionConfig | Production: error level, no sensitive info |
+| GebLogConfig.silentConfig     | Silent: all logging disabled               |
 
-## 📖 文档目录
+## 📖 Documentation
 
-- [快速开始](doc/getting_started.md) - 安装和基本使用
-- [API 参考](doc/api_reference.md) - 完整 API 文档
-- [GebBuilder Widget](doc/widgets/geb_builder.md) - 响应式 Widget
-- [调试面板](doc/widgets/debug_panel.md) - 开发调试工具
-- [GebListener Mixin](doc/mixins/geb_listener.md) - 简化事件订阅
-- [GebBlocMixin](doc/mixins/geb_bloc_mixin.md) - BLoC 集成
-- [BLoC 集成指南](doc/integration/bloc_integration.md) - 完整集成方案
-- [事件优先级](doc/advanced/priority.md) - 优先级系统
-- [批量处理模式](doc/advanced/batch_mode.md) - 性能优化
+- [Getting Started](doc/getting_started.md) - Installation and basic usage
+- [API Reference](doc/api_reference.md) - Complete API documentation
+- [GebBuilder Widget](doc/widgets/geb_builder.md) - Reactive Widget
+- [Debug Panel](doc/widgets/debug_panel.md) - Development debugging tools
+- [GebListener Mixin](doc/mixins/geb_listener.md) - Simplified event subscription
+- [GebBlocMixin](doc/mixins/geb_bloc_mixin.md) - BLoC integration
+- [BLoC Integration Guide](doc/integration/bloc_integration.md) - Complete integration
+- [Event Priority](doc/advanced/priority.md) - Priority system
+- [Batch Mode](doc/advanced/batch_mode.md) - Performance optimization
 
-## 📚 详细使用指南
+## 📚 Detailed Usage
 
-### 事件优先级
+### Event Priority
 
-事件优先级决定了事件的处理顺序，共有四个级别：
+Event priority determines processing order. There are four levels:
 
 ```dart
 enum GebPriority {
-  low(0),      // 低优先级 - 日志、统计等后台任务
-  normal(1),   // 普通优先级 - 默认级别，一般业务事件
-  high(2),     // 高优先级 - 用户交互、UI更新等
-  critical(3); // 关键优先级 - 系统级重要事件
+  low(0),      // Low priority - background tasks like logging, statistics
+  normal(1),   // Normal priority - default, general business events
+  high(2),     // High priority - user interactions, UI updates
+  critical(3); // Critical priority - system-level important events
 }
 
-// 使用示例
+// Usage example
 globalEventBus.sendEvent<String>(
   type: 'emergency_logout',
   data: 'Session expired',
@@ -396,15 +396,15 @@ globalEventBus.sendEvent<String>(
 );
 ```
 
-### 批量处理模式
+### Batch Processing Mode
 
-在高频事件场景下，启用批量模式可以显著提升性能：
+Enable batch mode for high-frequency event scenarios:
 
 ```dart
-// 启用批量模式，每50毫秒处理一批事件
+// Enable batch mode, process events every 50ms
 globalEventBus.manager.setBatchMode(true, intervalMs: 50);
 
-// 发送大量事件
+// Send many events
 for (int i = 0; i < 1000; i++) {
   globalEventBus.sendEvent<int>(
     type: 'batch_event',
@@ -412,29 +412,29 @@ for (int i = 0; i < 1000; i++) {
   );
 }
 
-// 关闭批量模式
+// Disable batch mode
 globalEventBus.manager.setBatchMode(false);
 ```
 
-### 多种监听方式
+### Listening Patterns
 
-#### 一次性监听
+#### One-Time Listening
 
 ```dart
-// 只监听一次，收到事件后自动移除监听器
+// Listen once, automatically removed after receiving event
 globalEventBus.listenOnce<String>(
   listenerId: 'splash_page',
   onEvent: (GebEvent<String> event) {
-    print('应用初始化完成');
-    // 跳转到主页面
+    print('App initialization complete');
+    // Navigate to main page
   },
 );
 ```
 
-#### 多类型监听
+#### Multi-Type Listening
 
 ```dart
-// 同时监听多种事件类型
+// Listen for multiple event types simultaneously
 globalEventBus.listen<String>(
   listenerId: 'notification_handler',
   eventTypes: ['user_login', 'user_logout', 'message_received'],
@@ -454,14 +454,14 @@ globalEventBus.listen<String>(
 );
 ```
 
-#### 条件监听
+#### Conditional Listening
 
 ```dart
-// 带条件的事件监听
+// Conditional event listening
 globalEventBus.listen<Map<String, dynamic>>(
   listenerId: 'admin_listener',
   onEvent: (GebEvent<Map<String, dynamic>> event) {
-    // 只处理管理员相关的事件
+    // Only handle admin-related events
     if (event.data['userRole'] == 'admin') {
       handleAdminEvent(event);
     }
@@ -469,114 +469,114 @@ globalEventBus.listen<Map<String, dynamic>>(
 );
 ```
 
-### 日志配置
+### Logging Configuration
 
-#### 预设配置
+#### Preset Configurations
 
 ```dart
-// 开发环境 - 详细日志
+// Development environment - detailed logging
 globalEventBus.configureLogging(GebLogConfig.debugConfig);
 
-// 生产环境 - 只记录错误
+// Production environment - only errors
 globalEventBus.configureLogging(GebLogConfig.productionConfig);
 
-// 关闭所有日志
+// Disable all logging
 globalEventBus.configureLogging(GebLogConfig.silentConfig);
 ```
 
-#### 自定义配置
+#### Custom Configuration
 
 ```dart
-// 详细的自定义日志配置
+// Detailed custom logging configuration
 globalEventBus.configureLogging(GebLogConfig(
-  level: GebLogLevel.info,           // 日志级别
-  enabled: true,                     // 启用日志
-  showTimestamp: true,               // 显示时间戳
-  showEventId: false,                // 不显示事件ID
-  showPriority: true,                // 显示优先级
-  showEventData: false,              // 不显示事件数据（生产环境推荐）
-  showListenerInfo: true,            // 显示监听器信息
-  logPrefix: '[MyApp-Events]',       // 自定义日志前缀
-  eventTypeFilter: ['user_action', 'api_call'], // 只记录特定类型的事件
-  customLogger: (message) {          // 自定义日志处理器
-    // 可以将日志写入文件或发送到服务器
+  level: GebLogLevel.info,           // Log level
+  enabled: true,                     // Enable logging
+  showTimestamp: true,               // Show timestamp
+  showEventId: false,                // Hide event ID
+  showPriority: true,                // Show priority
+  showEventData: false,              // Hide event data (recommended for production)
+  showListenerInfo: true,            // Show listener info
+  logPrefix: '[MyApp-Events]',       // Custom log prefix
+  eventTypeFilter: ['user_action', 'api_call'], // Only log specific event types
+  customLogger: (message) {          // Custom log handler
+    // Write to file or send to server
     print('Custom: $message');
   },
 ));
 ```
 
-### 性能监控
+### Performance Monitoring
 
 ```dart
-// 获取事件统计信息
+// Get event statistics
 final stats = globalEventBus.stats;
 
-print('总发送事件数: ${stats.totalEventsSent}');
-print('总接收事件数: ${stats.totalEventsReceived}');
-print('最后事件时间: ${stats.lastEventTime}');
+print('Total sent: ${stats.totalEventsSent}');
+print('Total received: ${stats.totalEventsReceived}');
+print('Last event time: ${stats.lastEventTime}');
 
-// 查看各类型事件的发送次数
+// Check event type counts
 stats.eventTypeCount.forEach((type, count) {
-  print('事件类型 $type: $count 次');
+  print('Event type $type: $count times');
 });
 
-// 获取性能信息
+// Get performance info
 final performanceInfo = globalEventBus.performanceInfo;
-print('活跃监听器数: ${performanceInfo['listenerCount']}');
-print('批量模式: ${performanceInfo['batchEnabled']}');
+print('Active listeners: ${performanceInfo['listenerCount']}');
+print('Batch mode: ${performanceInfo['batchEnabled']}');
 ```
 
-### 事件历史记录
+### Event History
 
 ```dart
-// 配置历史记录（可选，默认启用，最大100条）
+// Configure history (optional, defaults to enabled with max 100 records)
 globalEventBus.configureHistory(GebHistoryConfig(
   enabled: true,
   maxHistorySize: 500,
 ));
 
-// 获取最近的10个事件
+// Get recent 10 events
 final recentEvents = globalEventBus.getRecentEvents(count: 10);
 
-// 获取指定类型最近的5个事件
+// Get recent 5 events of specific type
 final loginEvents = globalEventBus.getRecentEventsByType('user_login', count: 5);
 
-// 获取指定类型的最后一个事件
+// Get last event of specific type
 final lastLogin = globalEventBus.getLastEventByType('user_login');
 
-// 获取所有已记录的事件类型
+// Get all recorded event types
 final allTypes = globalEventBus.eventTypes;
 
-// 清空历史记录
+// Clear history
 globalEventBus.clearHistory();
 ```
 
-### 🎯 实际应用场景
+### 🎯 Real-World Use Cases
 
-#### 1. 用户状态管理
+#### 1. User State Management
 
 ```dart
-// 用户登录
+// User login
 globalEventBus.sendEvent<UserInfo>(
   type: 'user_login',
   data: UserInfo(id: '123', name: 'John', email: 'john@example.com'),
   priority: GebPriority.high,
 );
 
-// 监听用户状态变化, 并在登录后立即更新用户界面
+// Listen for user state changes and update UI immediately after login
 globalEventBus.listen<UserInfo>(
   listenerId: 'user_profile_page',
   onEvent: (GebEvent<UserInfo> event) {
-    // 更新用户界面
+    // Update user interface
     updateUserProfile(event.data);
   },
 );
 ```
 
-#### 2. 购物车管理
+#### 2. Shopping Cart Management
 
 ```dart
-// 添加商品到购物车
+// Add item to cart
 globalEventBus.sendEvent<CartItem>(
   type: 'cart_add_item',
   data: CartItem(
@@ -587,77 +587,77 @@ globalEventBus.sendEvent<CartItem>(
   ),
 );
 
-// 监听购物车变化
+// Listen for cart changes
 globalEventBus.listen<CartItem>(
   listenerId: 'cart_badge',
   eventTypes: ['cart_add_item', 'cart_remove_item', 'cart_update_quantity'],
   onEvent: (GebEvent<CartItem> event) {
-    // 更新购物车徽章
+    // Update cart badge
     updateCartBadge();
   },
 );
 ```
 
-#### 3. 网络状态监控
+#### 3. Network Status Monitoring
 
 ```dart
-// 网络状态变化
+// Network status changed
 globalEventBus.sendEvent<bool>(
   type: 'network_status_changed',
   data: isConnected,
   priority: GebPriority.critical,
 );
 
-// 全局网络状态监听
+// Global network status listener
 globalEventBus.listen<bool>(
   listenerId: 'global_network_monitor',
   onEvent: (GebEvent<bool> event) {
     if (event.data) {
-      showSnackBar('网络已连接');
+      showSnackBar('Network connected');
     } else {
-      showSnackBar('网络已断开');
+      showSnackBar('Network disconnected');
     }
   },
   eventTypes: ['network_status_changed'],
 );
 ```
 
-#### 4. 主题切换
+#### 4. Theme Switching
 
 ```dart
-// 切换主题
+// Switch theme
 globalEventBus.sendEvent<ThemeMode>(
   type: 'theme_changed',
   data: ThemeMode.dark,
 );
 
-// 监听主题变化
+// Listen for theme changes
 globalEventBus.listen<ThemeMode>(
   listenerId: 'main_app',
   onEvent: (GebEvent<ThemeMode> event) {
-    // 更新应用主题
+    // Update app theme
     updateAppTheme(event.data);
   },
   eventTypes: ['theme_changed'],
 );
 ```
 
-### 🔧 高级功能
+### 🔧 Advanced Features
 
-#### GebBuilder 响应式 Widget
+#### GebBuilder Reactive Widget
 
 ```dart
-// 使用 GebBuilder 构建响应式 UI
+// Build reactive UI with GebBuilder
 class NotificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GebBuilder<String>(
       eventType: 'notification_received',
       useHistoryForInitialData: true,
-      initialData: '暂无通知',
+      initialData: 'No notifications',
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text('错误: ${snapshot.error}');
+          return Text('Error: ${snapshot.error}');
         }
         if (!snapshot.hasData) {
           return const CircularProgressIndicator();
@@ -665,7 +665,7 @@ class NotificationWidget extends StatelessWidget {
         return Card(
           child: ListTile(
             title: Text(snapshot.data!),
-            subtitle: Text('事件ID: ${snapshot.event?.eventId}'),
+            subtitle: Text('Event ID: ${snapshot.event?.eventId}'),
           ),
         );
       },
@@ -677,20 +677,20 @@ class NotificationWidget extends StatelessWidget {
 #### GebListener Mixin
 
 ```dart
-// 使用 Mixin 简化事件订阅
+// Use Mixin for simplified event subscription
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with GebListener {
-  String _userName = '未登录';
+  String _userName = 'Not logged in';
 
   @override
   void initState() {
     super.initState();
 
-    // 订阅用户登录事件
+    // Subscribe to user login event
     gebSubscribe<Map<String, dynamic>>(
       listenerId: 'home_user_login',
       eventType: 'user_login',
@@ -701,81 +701,81 @@ class _HomePageState extends State<HomePage> with GebListener {
       },
     );
 
-    // 订阅一次性事件
+    // Subscribe to one-time event
     gebSubscribeOnce<void>(
       listenerId: 'home_first_load',
       eventType: 'app_initialized',
       onEvent: (_) {
-        print('应用首次加载完成');
+        print('App first load complete');
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text('欢迎, $_userName');
+    return Text('Welcome, $_userName');
   }
 
-  // dispose 时自动取消所有订阅
+  // All subscriptions automatically cancelled on dispose
 }
 ```
 
-#### BLoC 集成
+#### BLoC Integration
 
 ```dart
-// 使用 GebBlocBridge 桥接 BLoC 和事件总线
+// Bridge BLoC and event bus using GebBlocBridge
 final bridge = GebBlocBridge<CounterEvent, CounterState>(
   bloc: counterBloc,
   stateEventType: 'counter_state_changed',
 );
 
-// 启动桥接
+// Start bridge
 bridge.start();
 
-// 将事件总线事件转发到 BLoC
+// Forward event bus events to BLoC
 bridge.forwardEventToBloc<int>(
   eventType: 'external_increment',
   mapper: (event) => IncrementEvent(event.data),
 );
 
-// 手动发布当前状态
+// Manually publish current state
 bridge.publishCurrentState();
 
-// 停止桥接（通常在 dispose 中调用）
+// Stop bridge (usually called in dispose)
 bridge.dispose();
 ```
 
 ```dart
-// 使用 GebBlocMixin 在 BLoC 中直接集成
+// Direct integration in BLoC using GebBlocMixin
 class CounterBloc extends Bloc<CounterEvent, CounterState> with GebBlocMixin<CounterState> {
   CounterBloc() : super(CounterState(0)) {
-    // 初始化事件总线集成
+    // Initialize event bus integration
     gebInit(
       eventBus: globalEventBus,
       stateEventType: 'counter_state',
     );
   }
 
-  // ... 其他 BLoC 逻辑 ...
+  // ... other BLoC logic ...
 
   @override
   Future<void> close() {
-    gebDispose(); // 清理资源
+    gebDispose(); // Clean up resources
     return super.close();
   }
 }
 ```
 
-#### BLoC 事件映射
+#### BLoC Event Mapping
 
 ```dart
-// 使用 GebBlocMapper 映射事件
+// Map events using GebBlocMapper
 bridge.forwardEventToBloc<String>(
   eventType: 'user_input',
-  mapper: GebBlocMapper.direct, // 直接映射
+  mapper: GebBlocMapper.direct, // Direct mapping
 );
 
-// 使用自定义映射
+// Use custom mapping
 bridge.forwardEventToBloc<Map<String, dynamic>>(
   eventType: 'complex_event',
   mapper: (event) => CustomEvent(
@@ -785,21 +785,21 @@ bridge.forwardEventToBloc<Map<String, dynamic>>(
 );
 ```
 
-### 🧪 测试支持
+### 🧪 Testing Support
 
 ```dart
-// 在测试中使用
+// Usage in tests
 void main() {
   group('Global Event Bus Tests', () {
     setUp(() {
-      // 清理之前的监听器
+      // Clean up previous listeners
       globalEventBus.removeAllListeners();
     });
 
     test('should send and receive events', () async {
       String? receivedData;
 
-      // 设置监听器
+      // Set up listener
       final subscription = globalEventBus.listen<String>(
         listenerId: 'test_listener',
         onEvent: (GebEvent<String> event) {
@@ -807,97 +807,97 @@ void main() {
         },
       );
 
-      // 发送事件
+      // Send event
       globalEventBus.sendEvent<String>(
         type: 'test_event',
         data: 'test_data',
       );
 
-      // 等待事件处理
+      // Wait for event processing
       await Future.delayed(const Duration(milliseconds: 10));
 
-      // 验证结果
+      // Verify result
       expect(receivedData, equals('test_data'));
 
-      // 清理
+      // Clean up
       subscription.cancel();
     });
   });
 }
 ```
 
-### 📊 性能建议
+### 📊 Performance Tips
 
-1. **合理使用事件优先级**
-   - 系统关键事件使用 `critical` 优先级
-   - 用户交互事件使用 `high` 优先级
-   - 一般业务事件使用 `normal` 优先级
-   - 日志统计事件使用 `low` 优先级
+1. **Use Event Priority Wisely**
+   - Use `critical` priority for system-critical events
+   - Use `high` priority for user interaction events
+   - Use `normal` priority for general business events
+   - Use `low` priority for logging and statistics events
 
-2. **高频事件优化**
-   - 对于高频事件（如滚动、动画），启用批量处理模式
-   - 合理设置批量处理间隔时间（建议 50-200ms）
-   - 避免在事件处理中执行耗时操作
+2. **Optimize for High-Frequency Events**
+   - Enable batch processing mode for high-frequency events (scrolling, animations)
+   - Set reasonable batch interval (recommended 50-200ms)
+   - Avoid time-consuming operations in event handlers
 
-3. **内存管理**
-   - 使用 `GebListener` Mixin 或 `GebBuilder` Widget，自动管理订阅生命周期
-   - 在 Widget `dispose()` 时取消订阅
-   - 避免创建过多的监听器
+3. **Memory Management**
+   - Use `GebListener` Mixin or `GebBuilder` Widget for automatic subscription lifecycle
+   - Cancel subscriptions in Widget `dispose()`
+   - Avoid creating too many listeners
 
-4. **日志配置**
-   - 生产环境使用 `GebLogConfig.productionConfig`
-   - 使用事件类型过滤减少日志量
-   - 考虑使用自定义日志处理器
+4. **Logging Configuration**
+   - Use `GebLogConfig.productionConfig` in production
+   - Use event type filtering to reduce log volume
+   - Consider using custom log handlers
 
-5. **历史记录配置**
-   - 根据业务需求合理设置最大历史记录数
-   - 不需要历史记录时使用 `GebHistoryConfig.disabled`
+5. **History Configuration**
+   - Set reasonable maximum history size based on business needs
+   - Use `GebHistoryConfig.disabled` when history is not needed
 
-### 🤝 贡献指南
+### 🤝 Contributing
 
-我们欢迎所有形式的贡献！请查看 CONTRIBUTING.md 了解详细信息。
+We welcome contributions in any form! Please see CONTRIBUTING.md for details.
 
-#### 开发环境设置
+#### Development Setup
 
 ```bash
-# 克隆仓库
+# Clone repository
 git clone https://gitee.com/pedro-labs/global_event_bus.git
-# 进入项目目录
+# Enter project directory
 cd global_event_bus
-# 安装依赖
+# Install dependencies
 flutter pub get
-# 运行示例
+# Run example
 cd example && flutter run
-# 运行测试
+# Run tests
 flutter test
 ```
 
-### 📄 许可证
+### 📄 License
 
-本项目采用 MIT 许可证。
+This project is licensed under the MIT License.
 
-### 🔗 相关链接
+### 🔗 Links
 
-- [Pub.dev 发布页](https://pub.dev/packages/global_event_bus)
-- [GitHub 仓库](https://github.com/pedro-labs/global_event_bus)
-- [Gitee 仓库](https://gitee.com/pedro-labs/global_event_bus)
-- [问题反馈](https://gitee.com/pedro-labs/global_event_bus/issues)
+- [Pub.dev Package](https://pub.dev/packages/global_event_bus)
+- [GitHub Repository](https://github.com/pedro-labs/global_event_bus)
+- [Gitee Repository](https://gitee.com/pedro-labs/global_event_bus)
+- [Issue Tracker](https://gitee.com/pedro-labs/global_event_bus/issues)
 
-### 📝 类命名对照表
+### 📝 Class Naming Reference
 
-为保持向后兼容性，旧类名通过 typedef 保留，但建议新项目使用新的 `Geb` 前缀类名。
+For backward compatibility, old class names are preserved via typedef. New projects should use the `Geb`-prefixed class names.
 
-| 旧类名                     | 新类名                | 状态         |
+| Old Name                  | New Name             | Status      |
 | ------------------------- | -------------------- | ----------- |
 | GlobalEvent\<T\>          | GebEvent\<T\>        | @Deprecated |
 | BaseGlobalEvent           | GebBaseEvent         | @Deprecated |
 | EventPriority             | GebPriority          | @Deprecated |
 | EventStats                | GebStats             | @Deprecated |
 | GlobalEventLogger         | GebLogger            | @Deprecated |
-| GlobalEventLogConfig       | GebLogConfig          | @Deprecated |
+| GlobalEventLogConfig      | GebLogConfig         | @Deprecated |
 | EventLogLevel             | GebLogLevel          | @Deprecated |
 | EventHistory              | GebHistory           | @Deprecated |
-| EventHistoryConfig         | GebHistoryConfig      | @Deprecated |
+| EventHistoryConfig        | GebHistoryConfig     | @Deprecated |
 | EventBusBuilder\<T\>      | GebBuilder\<T\>      | @Deprecated |
 | EventBusSnapshot\<T\>     | GebSnapshot\<T\>     | @Deprecated |
 | EventBusConnectionState   | GebConnectionState   | @Deprecated |

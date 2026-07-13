@@ -1,161 +1,161 @@
-# 变更日志
+# Changelog
 
-此项目的所有显著更改都将记录在此文件中。
+All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.3.0] - 2026-07-06
 
-#### 🚀 新功能
+### 🚀 New Features
 
-**可视化调试面板**
+**Visual Debug Panel**
 
-- 新增 `GebDebugPanel` 调试面板，提供可视化开发调试工具
-- 包含 6 个功能模块：
-  - **统计概览**：事件总数、监听器数量、事件类型分布、运行状态
-  - **实时事件流**：实时显示事件列表、优先级标识、暂停/继续、清空
-  - **历史记录**：事件历史列表、按类型筛选、事件详情查看
-  - **监听器管理**：监听器列表、监听类型、移除单个/全部监听器
-  - **日志查看**：实时日志、级别过滤、暂停/继续、导出到控制台
-  - **调试工具**：发送测试事件、系统操作、批量模式切换、数据导出
-- 支持多种打开方式：
-  - `globalEventBus.debug.show(context)` - 标准方式
-  - `globalEventBus.debug.showModal(context)` - 模态弹窗
-  - `globalEventBus.debug.showFloating(context)` - 悬浮按钮
-  - `globalEventBus.debug.pushNamed(context)` - 路由名称
-- 提供 `GebDebugController` 调试面板控制器，方便集成和配置
-- 支持开发环境自动显示悬浮调试按钮
+- Added `GebDebugPanel` debug panel, providing visual development debugging tools
+- Includes 6 functional modules:
+  - **Statistics Overview**: Total events, listener count, event type distribution, running status
+  - **Real-time Event Stream**: Real-time event list, priority indicators, pause/resume, clear
+  - **History**: Event history list, filter by type, view event details
+  - **Listener Management**: Listener list, listening types, remove single/all listeners
+  - **Log Viewer**: Real-time logs, level filtering, pause/resume, export to console
+  - **Debug Tools**: Send test events, system operations, batch mode toggle, data export
+- Supports multiple opening methods:
+  - `globalEventBus.debug.show(context)` - Standard way
+  - `globalEventBus.debug.showModal(context)` - Modal dialog
+  - `globalEventBus.debug.showFloating(context)` - Floating button
+  - `globalEventBus.debug.pushNamed(context)` - Named route
+- Provides `GebDebugController` for easy integration and configuration
+- Supports automatic floating debug button in development environment
 
-#### 📝 文档
+### 📝 Documentation
 
-- 新增 `doc/` 目录结构，按 Dart 官方规范组织文档
-- 创建详细的功能模块文档：
-  - `doc/getting_started.md` - 快速开始指南
-  - `doc/api_reference.md` - 完整 API 参考
-  - `doc/widgets/geb_builder.md` - GebBuilder Widget 使用指南
-  - `doc/widgets/debug_panel.md` - 调试面板使用指南
-  - `doc/mixins/geb_listener.md` - GebListener Mixin 使用指南
-  - `doc/mixins/geb_bloc_mixin.md` - GebBlocMixin 使用指南
-  - `doc/integration/bloc_integration.md` - BLoC 集成完整指南
-  - `doc/advanced/priority.md` - 事件优先级系统
-  - `doc/advanced/batch_mode.md` - 批量处理模式
-- 更新 README.md，添加文档目录链接
-- 完善示例项目，添加调试面板演示入口
+- Added `doc/` directory structure, organized according to Dart official conventions
+- Created detailed functional module documentation:
+  - `doc/getting_started.md` - Getting started guide
+  - `doc/api_reference.md` - Complete API reference
+  - `doc/widgets/geb_builder.md` - GebBuilder Widget usage guide
+  - `doc/widgets/debug_panel.md` - Debug panel usage guide
+  - `doc/mixins/geb_listener.md` - GebListener Mixin usage guide
+  - `doc/mixins/geb_bloc_mixin.md` - GebBlocMixin usage guide
+  - `doc/integration/bloc_integration.md` - BLoC integration complete guide
+  - `doc/advanced/priority.md` - Event priority system
+  - `doc/advanced/batch_mode.md` - Batch processing mode
+- Updated README.md with documentation directory links
+- Improved example project with debug panel demo entry
 
-#### 🔧 改进
+### 🔧 Improvements
 
-- 修复调试面板日志页面 Row 溢出问题，使用 Wrap 替代 Row
-- 修复 dispose 后调用 setState 的问题，添加 mounted 检查
-- 优化调试面板各模块的布局和交互
+- Fixed Row overflow issue in debug panel log page by replacing Row with Wrap
+- Fixed setState called after dispose issue by adding mounted checks
+- Optimized layout and interaction of debug panel modules
 
 ---
 
 ## [1.2.0] - 2026-07-06
 
-#### 🚀 新功能
+### 🚀 New Features
 
-**GebBuilder - 响应式 Widget**
+**GebBuilder - Reactive Widget**
 
-- 新增 `GebBuilder<T>` Widget，类似于 Flutter 的 `StreamBuilder`，专门用于全局事件总线
-- 自动处理事件订阅和取消订阅
-- 支持从历史记录获取初始数据
-- 提供 `GebSnapshot<T>` 快照类，封装事件数据和连接状态
-- 支持 `GebConnectionState` 连接状态枚举（none/active/done）
+- Added `GebBuilder<T>` Widget, similar to Flutter's `StreamBuilder`, designed specifically for global event bus
+- Automatically manages event subscription and cancellation
+- Supports getting initial data from history
+- Provides `GebSnapshot<T>` snapshot class, encapsulating event data and connection state
+- Supports `GebConnectionState` connection state enum (none/active/done)
 
-**GebListener - 事件监听器 Mixin**
+**GebListener - Event Listener Mixin**
 
-- 新增 `GebListener` Mixin，用于在 StatefulWidget 中监听事件
-- 自动管理订阅生命周期，在 Widget 销毁时自动取消所有订阅
-- 提供 `gebSubscribe<T>()` 和 `gebSubscribeOnce<T>()` 方法
-- 新增 `GebNoDataListener` Mixin，专门用于监听无数据事件
+- Added `GebListener` Mixin for listening to events in StatefulWidget
+- Automatically manages subscription lifecycle, cancels all subscriptions when Widget is destroyed
+- Provides `gebSubscribe<T>()` and `gebSubscribeOnce<T>()` methods
+- Added `GebNoDataListener` Mixin, specifically for listening to events without data
 
-**GebBlocBridge - BLoC 集成**
+**GebBlocBridge - BLoC Integration**
 
-- 新增 `GebBlocBridge<Event, State>` 桥接器，实现 BLoC 和事件总线的双向通信
-- BLoC 状态变更自动发送到事件总线
-- 支持将事件总线事件转发到 BLoC
-- 新增 `GebBlocMixin<State>`，用于在 BLoC 类中直接集成事件总线
-- 新增 `GebBlocMapper` 工具类，提供多种预定义的事件映射方法
-- 新增 `global_event_bus_bloc.dart` 导出文件，方便 BLoC 集成
+- Added `GebBlocBridge<Event, State>` bridge for bidirectional communication between BLoC and event bus
+- BLoC state changes automatically sent to event bus
+- Supports forwarding event bus events to BLoC
+- Added `GebBlocMixin<State>` for direct event bus integration in BLoC classes
+- Added `GebBlocMapper` utility class with multiple predefined event mapping methods
+- Added `global_event_bus_bloc.dart` export file for easy BLoC integration
 
-**GebHistory - 事件历史记录**
+**GebHistory - Event History**
 
-- 新增 `GebHistory` 事件历史记录管理器
-- 支持按类型、数量等多种方式查询历史事件
-- 提供 `GebHistoryConfig` 配置类，可配置是否启用和最大记录数
-- GlobalEventBus API 新增 `history`、`configureHistory()`、`getRecentEvents()` 等方法
+- Added `GebHistory` event history manager
+- Supports querying historical events by type, count, and other methods
+- Provides `GebHistoryConfig` configuration class with enable/disable and max records settings
+- GlobalEventBus API added `history`, `configureHistory()`, `getRecentEvents()` and other methods
 
-**日志配置增强**
+**Logging Configuration Enhancements**
 
-- `GebLogConfig` 新增预设配置：`debugConfig`、`productionConfig`、`silentConfig`
-- 新增 `copyWith()` 方法，支持选择性覆盖配置
-- 新增 `listenerIdFilter` 过滤器，支持按监听器ID过滤日志
+- `GebLogConfig` added preset configurations: `debugConfig`, `productionConfig`, `silentConfig`
+- Added `copyWith()` method for selective configuration overriding
+- Added `listenerIdFilter` filter for filtering logs by listener ID
 
-**类命名重构**
+**Class Naming Refactoring**
 
-- 所有核心类添加 `Geb` 前缀（如 `GebEvent<T>`、`GebPriority`、`GebLogger`）
-- 通过 typedef 和 @Deprecated 保持向后兼容性（如 `GlobalEvent<T> = GebEvent<T>`）
-- 支持旧类名继续使用，但会显示废弃警告
+- All core classes added `Geb` prefix (e.g., `GebEvent<T>`, `GebPriority`, `GebLogger`)
+- Maintained backward compatibility through typedef and @Deprecated (e.g., `GlobalEvent<T> = GebEvent<T>`)
+- Old class names still work but show deprecation warnings
 
-#### 🔧 改进
+### 🔧 Improvements
 
-- 使用 `is` 类型检查替代直接类型转换，避免 CastError
-- State 更新前检查 `mounted` 属性，防止 Flutter 框架断言错误
-- 优化批量模式下的事件排序和发送逻辑
-- 增强错误处理和异常捕获机制
+- Used `is` type checking instead of direct casting to avoid CastError
+- Checked `mounted` property before State updates to prevent Flutter framework assertion errors
+- Optimized event sorting and sending logic in batch mode
+- Enhanced error handling and exception catching mechanism
 
-#### ⚠️ 向后兼容性
+### ⚠️ Backward Compatibility
 
-- 所有旧类名（如 `GlobalEvent<T>`、`EventPriority`）通过 typedef 保留
-- 旧类名标记为 @Deprecated，会显示废弃警告
-- 建议新项目使用新的 Geb 前缀类名
+- All old class names (e.g., `GlobalEvent<T>`, `EventPriority`) preserved via typedef
+- Old class names marked as @Deprecated with deprecation warnings
+- New projects recommended to use the new Geb-prefixed class names
 
 ---
 
 ## [1.1.0] - 2026-06-18
 
-#### 📝 Documentation
+### 📝 Documentation
 
-- 为所有类、枚举、函数和属性补充完整的 API 文档注释
-- 添加详细的参数说明、返回值说明和使用示例
-- 完善 `EventPriority` 枚举的优先级说明
-- 完善 `EventStats` 类的统计方法文档
-- 完善 `BaseGlobalEvent` 和 `GlobalEvent<T>` 的事件模型文档
-- 完善 `EventLogLevel` 枚举的日志级别说明
-- 完善 `GlobalEventLogConfig` 的配置参数和预设配置文档
-- 完善 `GlobalEventLogger` 的所有日志方法文档
-- 完善 `GlobalEventManager` 的核心管理方法文档
-- 完善 `GlobalEventBus` 的公共 API 文档
-- 所有文档包含中文说明和代码示例
+- Added complete API documentation comments for all classes, enums, functions, and properties
+- Added detailed parameter descriptions, return value descriptions, and usage examples
+- Improved documentation for `EventPriority` enum priority descriptions
+- Improved documentation for `EventStats` class statistics methods
+- Improved documentation for `BaseGlobalEvent` and `GlobalEvent<T>` event models
+- Improved documentation for `EventLogLevel` enum log level descriptions
+- Improved documentation for `GlobalEventLogConfig` configuration parameters and preset configurations
+- Improved documentation for all `GlobalEventLogger` log methods
+- Improved documentation for `GlobalEventManager` core management methods
+- Improved documentation for `GlobalEventBus` public API
+- All documentation includes Chinese descriptions and code examples
 
-#### 🔧 Code Quality
+### 🔧 Code Quality
 
-- 通过 `flutter analyze` 静态代码分析，无问题
-- 通过 `pana` 工具评分预检，得分 120/140
-- 所有单元测试 100% 通过（6/6 测试用例）
+- Passed `flutter analyze` static code analysis with no issues
+- Passed `pana` tool score pre-check with score 120/140
+- All unit tests passed 100% (6/6 test cases)
 
 ---
 
 ## [1.0.2] - 2025-08-26
 
-#### 🚀 Release Improvements
+### 🚀 Release Improvements
 
-- 完善发布流程，确保代码质量和测试覆盖率
-- 通过全面的静态代码分析和单元测试验证
-- 优化包发布规范，提升用户体验
-- 更新文档和API说明，确保版本一致性
+- Improved release process to ensure code quality and test coverage
+- Verified through comprehensive static code analysis and unit testing
+- Optimized package release standards to improve user experience
+- Updated documentation and API descriptions to ensure version consistency
 
 ---
 
 ## [1.0.1] - 2025-01-26
 
-#### 🔧 Code Quality Improvements
+### 🔧 Code Quality Improvements
 
-- 修复测试文件中的代码风格问题
-- 优化构造函数使用const关键字提升性能
-- 通过静态代码分析检查，确保代码质量
-- 统一代码格式化标准
+- Fixed code style issues in test files
+- Optimized constructor const keyword usage for performance
+- Passed static code analysis checks to ensure code quality
+- Unified code formatting standards
 
 ---
 
@@ -163,219 +163,219 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🎉 Major Release - Pure Dart Package
 
-#### ✨ Features
+### ✨ Features
 
-- **BREAKING CHANGE**: 转换为纯Dart包，移除所有平台特定代码
-- 保持所有核心事件总线功能完整性
-- 简化包结构，提升性能和兼容性
+- **BREAKING CHANGE**: Converted to pure Dart package, removed all platform-specific code
+- Maintained all core event bus functionality
+- Simplified package structure for improved performance and compatibility
 
-#### 🗑️ Removed
+### 🗑️ Removed
 
-- 移除平台插件配置和依赖
-- 删除 `getPlatformVersion()` 方法（非核心功能）
-- 移除所有原生平台目录（android, ios, linux, macos, windows）
-- 删除平台接口相关文件：
+- Removed platform plugin configuration and dependencies
+- Removed `getPlatformVersion()` method (non-core functionality)
+- Removed all native platform directories (android, ios, linux, macos, windows)
+- Removed platform interface related files:
   - `global_event_bus_platform_interface.dart`
   - `global_event_bus_method_channel.dart`
   - `global_event_bus_web.dart`
 
-#### 🔧 Technical Changes
+### 🔧 Technical Changes
 
-- 更新 `pubspec.yaml`，移除 `plugin_platform_interface` 和 `flutter_web_plugins` 依赖
-- 简化主入口文件 `global_event_bus.dart`
-- 更新测试文件，专注于核心事件总线功能测试
+- Updated `pubspec.yaml`, removed `plugin_platform_interface` and `flutter_web_plugins` dependencies
+- Simplified main entry file `global_event_bus.dart`
+- Updated test files to focus on core event bus functionality
 
-#### 📈 Benefits
+### 📈 Benefits
 
-- ✅ 更好的跨平台兼容性
-- ✅ 更简单的维护和部署
-- ✅ 更快的包加载速度
-- ✅ 减少依赖冲突风险
+- ✅ Better cross-platform compatibility
+- ✅ Simpler maintenance and deployment
+- ✅ Faster package loading speed
+- ✅ Reduced dependency conflict risk
 
-#### 🔄 Migration Guide
+### 🔄 Migration Guide
 
-如果您之前使用了 `getPlatformVersion()` 方法，请移除相关调用。所有其他API保持不变。
+If you previously used the `getPlatformVersion()` method, please remove related calls. All other APIs remain unchanged.
 
 ---
 
 ## [Unreleased]
 
-### 🚀 计划新功能
+### 🚀 Planned Features
 
-- 事件持久化支持
-- 事件重放功能
-- 更多的事件过滤器
+- Event persistence support
+- Event replay functionality
+- More event filters
 
 ---
 
 ## [0.0.7]
 
-### 🔧 改进
+### 🔧 Improvements
 
-- **仓库迁移**：将主要仓库从 GitHub 迁移到 Gitee，提供更好的国内访问体验
-- **文档更新**：更新所有项目文档中的仓库链接，包括：
-  - `pubspec.yaml` 中的 homepage、repository 和 issue_tracker 链接
-  - `README.md` 中的克隆命令
-  - iOS 和 macOS podspec 文件中的 homepage 链接
-- **双仓库同步**：配置了 Gitee 和 GitHub 的双仓库同步机制，GitHub 作为备份仓库
+- **Repository Migration**: Migrated main repository from GitHub to Gitee for better domestic access experience
+- **Documentation Updates**: Updated repository links in all project documents, including:
+  - homepage, repository, and issue_tracker links in `pubspec.yaml`
+  - Clone command in `README.md`
+  - homepage links in iOS and macOS podspec files
+- **Dual Repository Sync**: Configured dual repository sync mechanism between Gitee and GitHub, with GitHub as backup repository
 
-### 📝 文档
+### 📝 Documentation
 
-- 更新项目主页链接为 Gitee 仓库
-- 更新问题反馈链接指向 Gitee Issues
-- 保持技术文档和第三方依赖的原有链接不变
+- Updated project homepage link to Gitee repository
+- Updated issue feedback link to Gitee Issues
+- Maintained technical documentation and third-party dependency links unchanged
 
 ---
 
 ## [0.0.6]
 
-### 🚀 新功能
+### 🚀 New Features
 
-`GlobalEventBus` 类
+`GlobalEventBus` Class
 
-- **增强的事件发送 API**： 新增 `sendEventWithoutData()` 方法，支持发送无数据载荷的事件
-- **安全事件发送**：新增 `sendEventSafe()` 方法，提供不抛出异常的安全发送机制
-- **延迟事件发送**：新增 `sendEventDelayed()` 方法，支持延迟指定时间后发送事件
-- **一次性监听器**：新增 `listenOnce()` 方法，支持只触发一次的事件监听器
-- **批量监听器管理**：新增 `removeAllListeners()` 和 `cleanupExpiredListeners()` 方法
-- **监听器状态查询**：新增 `hasListener()` 方法检查指定监听器是否存在
-- **性能监控增强**：新增 `listenerCount`、`listenerIds` 和 `performanceInfo` 属性
-- **批量处理控制**：新增 `setBatchMode()` 方法，可动态启用/禁用批量处理模式
+- **Enhanced Event Sending API**: Added `sendEventWithoutData()` method for sending events without data payload
+- **Safe Event Sending**: Added `sendEventSafe()` method providing exception-safe sending mechanism
+- **Delayed Event Sending**: Added `sendEventDelayed()` method supporting delayed event sending
+- **One-Time Listener**: Added `listenOnce()` method for one-time event listeners
+- **Batch Listener Management**: Added `removeAllListeners()` and `cleanupExpiredListeners()` methods
+- **Listener Status Query**: Added `hasListener()` method to check if a specific listener exists
+- **Performance Monitoring Enhancement**: Added `listenerCount`, `listenerIds`, and `performanceInfo` properties
+- **Batch Processing Control**: Added `setBatchMode()` method for dynamic batch processing mode enable/disable
 
-### 🔧 改进
+### 🔧 Improvements
 
-- **API 完整性提升**：GlobalEventBus 类现在提供了更完整的事件管理功能
-- **错误处理增强**：所有监听器方法现在支持可选的 `onError` 回调参数
-- **类型安全优化**：改进了泛型事件的类型推断和安全性
-- **性能监控**：增强了事件统计和性能信息收集功能
-- **代码结构优化**：更好的封装性，隐藏了内部实现细节
+- **API Completeness**: GlobalEventBus class now provides more complete event management functionality
+- **Error Handling Enhancement**: All listener methods now support optional `onError` callback parameter
+- **Type Safety Optimization**: Improved generic event type inference and safety
+- **Performance Monitoring**: Enhanced event statistics and performance information collection
+- **Code Structure Optimization**: Better encapsulation, hiding internal implementation details
 
-### 📝 文档
+### 📝 Documentation
 
-- 完善了 GlobalEventBus 类的 API 文档
-- 添加了新功能的使用示例和最佳实践
-- 更新了性能优化相关的文档说明
+- Improved GlobalEventBus class API documentation
+- Added usage examples and best practices for new features
+- Updated documentation related to performance optimization
 
-### 🐛 修复
+### 🐛 Fixes
 
-- 修复了 `sendEventDelayed()` 方法中 metadata 参数传递的问题
-- 优化了一次性监听器的自动清理机制
-- 改进了批量处理模式下的事件排序逻辑
+- Fixed metadata parameter passing issue in `sendEventDelayed()` method
+- Optimized automatic cleanup mechanism for one-time listeners
+- Improved event sorting logic in batch processing mode
 
-### ⚡ 性能优化
+### ⚡ Performance Optimizations
 
-- 优化了监听器查找和管理的性能
-- 改进了批量事件处理的效率
-- 减少了不必要的内存分配和垃圾回收
+- Optimized listener lookup and management performance
+- Improved batch event processing efficiency
+- Reduced unnecessary memory allocation and garbage collection
 
 ---
 
 ## [0.0.5]
 
-### 🚀 新功能
+### 🚀 New Features
 
-- 支持事件发送时可选 data 字段（GlobalEvent 类已修改为 T?类型）
-- 优化 global_event_manager.dart 的 sendEvent 方法实现
+- Support for optional data field when sending events (GlobalEvent class modified to T? type)
+- Optimized sendEvent method implementation in global_event_manager.dart
 
-### 🔧 改进
+### 🔧 Improvements
 
-- 增加对空 data 场景的类型校验
-- 更新相关测试用例覆盖无 data 参数的事件发送
+- Added type validation for null data scenarios
+- Updated related test cases to cover events without data parameter
 
 ---
 
 ## [0.0.4]
 
-### 🐛 修复
+### 🐛 Fixes
 
-- 修复了 Android 平台包名配置问题，解决插件引用时找不到主类的错误
-- 添加了 Android Kotlin 文件的包声明，确保包名与配置一致
-- 修复了测试文件中`dart:async`导入缺失的问题
-- 优化了插件的 Android 平台兼容性
+- Fixed Android platform package name configuration issue, resolving "cannot find main class" error when referencing the plugin
+- Added package declaration in Android Kotlin files to ensure package name consistency with configuration
+- Fixed missing `dart:async` import in test files
+- Optimized Android platform compatibility
 
-### 🔧 改进
+### 🔧 Improvements
 
-- 统一了 Android 包名为`com.example.global_event_bus`
-- 完善了 Kotlin 文件的包结构声明
-- 提升了插件在不同项目中的引用稳定性
+- Unified Android package name to `com.example.global_event_bus`
+- Improved Kotlin file package structure declarations
+- Enhanced plugin reference stability in different projects
 
-### 📝 文档
+### 📝 Documentation
 
-- 更新了 Android 平台配置相关文档
-- 完善了插件集成指南
+- Updated Android platform configuration documentation
+- Improved plugin integration guide
 
-### ⚠️ 版本说明
+### ⚠️ Version Notes
 
-- 版本 0.0.2 和 0.0.3 因 Android 兼容性问题已撤回
-- 强烈建议所有用户升级到 0.0.4 版本
+- Versions 0.0.2 and 0.0.3 have been withdrawn due to Android compatibility issues
+- Strongly recommended for all users to upgrade to version 0.0.4
 
 ---
 
 ## [0.0.3]
 
-### 🚀 新功能
+### 🚀 New Features
 
-- 升级 Dart SDK 最低版本要求至 2.19.0，提升性能和稳定性
-- 升级 Flutter SDK 最低版本要求至 3.3.0
-- 移出 web 插件的支持
-- 增强了类型安全检查和编译时优化
+- Upgraded minimum Dart SDK version requirement to 2.19.0 for improved performance and stability
+- Upgraded minimum Flutter SDK version requirement to 3.3.0
+- Removed web plugin support
+- Enhanced type safety checks and compile-time optimizations
 
-### 🔧 改进
+### 🔧 Improvements
 
-- 优化了事件分发性能，减少内存占用
-- 改进了批量处理机制的效率
-- 增强了错误处理和异常捕获
-- 优化了日志输出格式和性能
+- Optimized event dispatch performance, reduced memory usage
+- Improved efficiency of batch processing mechanism
+- Enhanced error handling and exception catching
+- Optimized log output format and performance
 
-### 📝 文档
+### 📝 Documentation
 
-- 更新了 API 文档以反映最新变更
-- 完善了代码示例和最佳实践指南
-- 添加了性能优化建议
+- Updated API documentation to reflect latest changes
+- Improved code examples and best practice guides
+- Added performance optimization suggestions
 
-### 🐛 修复
+### 🐛 Fixes
 
-- 修复了高并发场景下的内存泄漏问题
-- 解决了某些边缘情况下的事件丢失问题
-- 修复了 Web 平台上的兼容性问题
+- Fixed memory leak issues in high-concurrency scenarios
+- Resolved event loss issues in certain edge cases
+- Fixed Web platform compatibility issues
 
-### ⚠️ 破坏性变更
+### ⚠️ Breaking Changes
 
-- 最低 Dart SDK 版本要求从 2.17.0 提升至 2.19.0
-- 最低 Flutter SDK 版本要求从 3.0.0 提升至 3.3.0
+- Minimum Dart SDK version requirement increased from 2.17.0 to 2.19.0
+- Minimum Flutter SDK version requirement increased from 3.0.0 to 3.3.0
 
 ---
 
 ## [0.0.2]
 
-### 🚀 新功能
+### 🚀 New Features
 
-- 降低了 Flutter SDK 最低版本要求至 3.0.0，提高兼容性
-- 降低了 Dart SDK 最低版本要求至 2.17.0
-- 优化了依赖包版本约束，提升稳定性
+- Reduced minimum Flutter SDK version requirement to 3.0.0 for improved compatibility
+- Reduced minimum Dart SDK version requirement to 2.17.0
+- Optimized dependency package version constraints for improved stability
 
-### 🔧 改进
+### 🔧 Improvements
 
-- 更新了项目文档和示例代码
-- 完善了测试覆盖率
-- 优化了插件平台兼容性配置
+- Updated project documentation and example code
+- Improved test coverage
+- Optimized plugin platform compatibility configuration
 
-### 📝 文档
+### 📝 Documentation
 
-- 添加了详细的 API 文档
-- 完善了使用示例和最佳实践
-- 更新了 README.md 文件
+- Added detailed API documentation
+- Improved usage examples and best practices
+- Updated README.md file
 
-### 🐛 修复
+### 🐛 Fixes
 
-- 修复了在某些平台上的兼容性问题
-- 优化了事件处理的性能
+- Fixed compatibility issues on certain platforms
+- Optimized event processing performance
 
 ---
 
 ## [0.0.1]
 
-### 🎉 首次发布
+### 🎉 Initial Release
 
 - Initial release of Global Event Bus
 - Type-safe event system with generic support
@@ -386,17 +386,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Delayed event sending
 - Multiple listener types (once, multi-type, conditional)
 
-### ✨ 核心特性
+### ✨ Core Features
 
-- **类型安全**: 完全支持 Dart 泛型，编译时类型检查
-- **优先级系统**: 支持 critical、high、normal、low 四个优先级
-- **批量处理**: 高频事件的批量处理模式，提升性能
-- **日志系统**: 多级别日志记录，便于调试和监控
-- **性能监控**: 内置统计功能，监控事件发送和接收
-- **延迟发送**: 支持延迟事件发送
-- **多种监听器**: 支持一次性、多类型、条件监听器
+- **Type Safety**: Full Dart generic support, compile-time type checking
+- **Priority System**: Supports critical, high, normal, low four priorities
+- **Batch Processing**: Batch processing mode for high-frequency events, improving performance
+- **Logging System**: Multi-level log recording for debugging and monitoring
+- **Performance Monitoring**: Built-in statistics for monitoring event sending and receiving
+- **Delayed Sending**: Supports delayed event sending
+- **Multiple Listeners**: Supports once, multi-type, conditional listeners
 
-### 🎯 平台支持
+### 🎯 Platform Support
 
 - ✅ Android
 - ✅ iOS
@@ -407,24 +407,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## 版本说明
+## Version Notes
 
-### 版本号规则
+### Version Number Rules
 
-本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)：
+This project follows [Semantic Versioning](https://semver.org/lang/en/):
 
-- **主版本号**: 不兼容的 API 修改
-- **次版本号**: 向下兼容的功能性新增
-- **修订号**: 向下兼容的问题修正
+- **Major Version**: Incompatible API changes
+- **Minor Version**: Backward-compatible feature additions
+- **Patch Version**: Backward-compatible bug fixes
 
-### 图标说明
+### Icon Definitions
 
-- 🚀 新功能 (Added)
-- 🔧 改进 (Changed)
-- 🗑️ 废弃 (Deprecated)
-- 🐛 修复 (Fixed)
-- 🔒 安全 (Security)
-- 📝 文档 (Documentation)
-- ⚠️ 破坏性变更 (Breaking Changes)
-- 🎉 重要里程碑 (Major Milestones)
-- ⚡ 性能优化 (Performance)
+- 🚀 New Feature (Added)
+- 🔧 Improvement (Changed)
+- 🗑️ Deprecated
+- 🐛 Bug Fix (Fixed)
+- 🔒 Security
+- 📝 Documentation
+- ⚠️ Breaking Changes
+- 🎉 Major Milestones
+- ⚡ Performance Optimization
