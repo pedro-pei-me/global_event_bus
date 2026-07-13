@@ -1,6 +1,6 @@
 # 🚀 Global Event Bus - 全局事件总线
 
-[中文](README-CN.md) | [English](README.md)
+[中文](README_CN.md) | [English](README.md)
 
 <div align="center">
   <img src="assets/icons/animated_logo.svg" alt="Global Event Bus Logo" width="400" height="200">
